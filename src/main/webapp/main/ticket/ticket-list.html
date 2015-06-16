@@ -1,0 +1,69 @@
+<div>
+    <div class="">
+        <div class="search-form search-form-inline" style="height:42px;">
+            <ul class="fl">
+                <li>
+                    <label>票据名称：</label>
+                    <input type="text" class="txt"  ng-model="ticketSearchCondition.Name"/>
+                </li>
+                <li>
+                    <label>活动主题：</label>
+                    <input type="text" class="txt"  ng-model="ticketSearchCondition.Name"/>
+                </li>
+                <li>
+                    <label>起止日期：</label>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle my-toggle-select" id="fromDateLabel" role="button" data-toggle="dropdown" data-target="#" href="">
+                            <div class="input-group">
+                                <input class="txt input-date"   type="text" ng-readonly="true" 
+                                       value="{{ ticketSearchCondition.fromDate | date: 'yyyy-MM-dd' }}" />
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="fromDateLabel">
+                            <datetimepicker data-ng-model="ticketSearchCondition.fromDate"
+                                            data-datetimepicker-config="{ startView:'day', minView:'day', dropdownSelector: '.my-toggle-select' }"></datetimepicker>
+                        </ul>
+                    </div>
+                    —
+                    <div class="dropdown">
+                        <a class="dropdown-toggle my-toggle-select" id="toDateLabel" role="button" data-toggle="dropdown" data-target="#" href="">
+                            <div class="input-group">
+                                <input class="txt input-date"  type="text" ng-readonly="true" 
+                                       value="{{ ticketSearchCondition.toDate | date: 'yyyy-MM-dd' }}" />
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="toDateLabel">
+                            <datetimepicker data-ng-model="ticketSearchCondition.toDate"
+                                            data-datetimepicker-config="{ startView:'day', minView:'day', dropdownSelector: '.my-toggle-select' }"></datetimepicker>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-primary mr10" ng-click="searchTicket()"><i class="icon icon-white icon-search"></i> 查询</button>
+                    <button type="button" class="btn"><i class="icon icon-refresh" ng-click="clear()" ></i> 清空</button>
+                </li>
+            </ul>
+            <div class="fr" style="margin-top:8px;">
+                <button type="button" class="btn btn-complete mr10" ng-click="createTicket()"><i class="icon icon-white icon-plus-sign"></i> 新增票据</button>
+                <!--<button type="button" class="btn btn-danger"><i class="icon icon-white icon-trash"></i> 删除</button>-->
+            </div>
+        </div>
+        <div class="px20">
+            <div class="table-bg"  ng-class="{'table-nodata':gridOptions.data.length==0}">
+                <div id="cgGrid" ui-grid="gridOptions" ui-grid-auto-resize ui-grid-selection ui-grid-pagination external-scopes="ticketListScope"  ng-style="initTableHeight()"></div>
+            </div>
+            <div class="page">
+                <div class="pageinfo fl mr10">当前 
+                    <input class="input-sm txt" style="width:40px;" type="number"  id="inputPage" ng-model="currentPage" ng-change="gridApi.pagination.seek(currentPage)"/>
+                    <span> / {{gridApi.pagination.getTotalPages()}}</span>
+                    页，共{{gridOptions.data.length}}条数据</div>
+                <div class="pagination fr">
+                    <ul>
+                        <li> <button type="button" ng-click="previousPage()">上一页</button></li>
+                        <li><button type="button" ng-click="nextPage()">下一页</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

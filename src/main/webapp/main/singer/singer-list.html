@@ -1,0 +1,70 @@
+<div>
+    <div class="search-form search-form-inline oh">
+        <ul class="fl">
+            <li>
+                <label>姓名：</label>
+                <input type="text" class="txt"  ng-model="singerSearchCondition.singerName"  />
+            </li>
+            <li>
+                <label>徽章等级：</label>
+                <select ng-model="singerSearchCondition.badgeType"
+                        ng-options="bt.id as bt.name for bt in badgeTypes" >
+                    <option value="">-- 请选择 --</option>
+                </select>
+            </li>
+            <li>
+                <button type="button" class="btn btn-primary mr10"  ng-click="searchSinger()" ><i class="icon icon-white icon-search"></i> 查询</button>
+                <button type="button" class="btn" ng-click="clearSinger()" ><i class="icon icon-refresh"></i> 清空</button>
+            </li>
+        </ul>
+        <div class="fr" style="margin-top:8px;">
+            <button class="btn btn-complete mr10" ng-click="createSinger()" ><i class="icon icon-white icon-plus-sign"></i> 新增歌手</button>
+            <!--<button type="button" class="btn btn-danger"><i class="icon icon-white icon-trash"></i> 删除</button>-->
+        </div>
+    </div>
+    <div class="px20">
+        <div class="table-bg" ng-class="{'table-nodata':gridOptions.data.length==0}">
+            <div id="cgGrid" ui-grid="gridOptions" ui-grid-auto-resize ui-grid-selection ui-grid-pagination external-scopes="singerListScope" class="thumbGrid" ng-style="initTableHeight()"></div>
+        </div>
+        <div class="page">
+            <div class="pageinfo fl mr10">当前 
+                <input class="input-sm txt" style="width:40px;" type="number"  id="inputPage" ng-model="currentPage" ng-change="gridApi.pagination.seek(currentPage)"/>
+                <span> / {{gridApi.pagination.getTotalPages()}}</span>
+                页，共{{gridOptions.data.length}}条数据</div>
+            <div class="pagination fr">
+                <ul>
+                    <li> <button type="button" ng-click="previousPage()">上一页</button></li>
+                    <li><button type="button" ng-click="nextPage()">下一页</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="cover" ng-show="openSongs">
+    <div class="modal">
+        <div class="modal-header"> <a class="close" data-dismiss="modal" ng-click="CloseDiv();">×</a>
+            <h3>歌单</h3>
+        </div>
+        <div class="modal-body" style="min-height:450px;">
+            <div class="alert center" ng-if="filterSongs.length==0&&!isAddSong">暂无歌曲信息</div>
+            <table width="100%" class="table modal-body-list table-hover-icon">
+                <tr ng-repeat="song in filterSongs=(songs | filter:singerName)">
+                    <td width="20">{{$index + 1}}</td>
+                    <td>
+                        <div ng-show="$index == currentIndex"><input type="text" class="txt span3 editTxt" ng-model="song.songName" ng-blur="saveSong(song,$index)"/></div>
+                        <div ng-show="$index != currentIndex">{{song.songName}}<a ng-click="editSong($index)" class="hide ml20" title="编辑歌曲"><i class="icon icon-pencil"></i></a></div>
+                    </td>
+                    <td width="50"><a class="hide fr" title="移除歌曲"  ng-click="deleteSong(song)"><i class="icon icon-red icon-trash"></i></a></td>
+                </tr>
+                <tr ng-show="isAddSong">
+                    <td width="20">{{filterSongs.length + 1}}</td>
+                    <td><input type="text" class="txt span3" ng-model="newSongName" id="newSongName"  ng-blur="addSong()"/></td>
+                    <td width="50"><a class="hide fr" title="移除歌曲" ng-click="closeAddSong()"><i class="icon icon-red icon-trash"></i></a></td>
+                </tr>
+
+            </table>
+            <div class="mt20"><button  ng-click="openAddSong();" class="btn btn-complete mr10"><i class="icon icon-white icon-plus-sign"></i> 新增歌曲</button></div>
+        </div>
+
+    </div>
+</div>

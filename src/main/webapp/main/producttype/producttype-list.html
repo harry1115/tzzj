@@ -1,0 +1,16 @@
+<div>
+    <form novalidate="novalidate" >
+          <div class="search-form search-form-inline oh">
+            <div class="fl my5">
+                <button class="btn btn-complete mr10"  ng-click="createProducttype()"><i class="icon icon-white icon-plus-sign"></i> 新增分类</button>
+                <!--<button type="button" class="btn btn-danger"><i class="icon icon-white icon-trash"></i> 删除</button>-->
+            </div>
+        </div>
+    </form>
+    <div class="px20">
+        <div class="table-bg">
+            <div id="cgGrid" ui-grid="gridOptions" ui-grid-selection ui-grid-auto-resize external-scopes="productTypeListScope" class="thumbGrid"  ng-style="initTableHeight()"></div>
+            
+        </div>
+    </div>
+</div>

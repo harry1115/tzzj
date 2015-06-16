@@ -1,0 +1,156 @@
+<div>
+    <div class="nav-2">
+        <div class="menu-date">
+            <div class="dropdown">
+                <a class="dropdown-toggle my-toggle-select" id="playbillDateLabel" role="button" data-toggle="dropdown"
+                   data-target="#" href="">
+                    <div class="input-group">
+                        <input class="txt input-date" id="inputPlaybillDate" type="text" ng-readonly="true"
+                               ng-model="playbillSearchCondition.playbillDate" datepicker-popup="yyyy-MM-dd"
+                               date-type="string"/>
+                    </div>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="playbillDateLabel">
+                    <datetimepicker data-ng-model="playbillSearchCondition.playbillDate"
+                                    data-datetimepicker-config="{ startView:'day', minView:'day', dropdownSelector: '.my-toggle-select' }"></datetimepicker>
+                </ul>
+            </div>
+        </div>
+        <div class="menu2">
+            <ul>
+
+                <li ng-repeat="playbill in playbills" ng-click="clickPlaybill(playbill, $index)" ng-cloak
+                    ng-class="{'active':$index == currentSelect}">
+                    <div class="oh mb20"><span class="fl font14 color_999 mt5"><i
+                                class="icon icon-gray icon-time mr10"></i>{{playbill.fromTime| date: 'HH:mm'}} - {{playbill.toTime| date: 'HH:mm'}}</span><span
+                            class="label fr"
+                            ng-class="{'label-success':playbill.playbillState === 'PAID','label-danger':playbill.playbillState === 'ACTIVE'}">{{playbill.playbillState| playbillStateFilter}}</span>
+                    </div>
+                    <div class="oh"><img class="thumbnail-circle mr20 fl" style="width:40px;height:40px;"
+                                         onerror="this.src='img/thumb-user.png'" ng-src="{{image.filePath}}"
+                                         ng-repeat="image in playbill.singer.singerImages"
+                                         ng-if="image.pictureType === 'PORTRAIT'"><img class="thumb mr20"
+                                         src="img/thumb-user.png" alt=""
+                                         ng-if="playbill.singer.singerImages.length == 0" style="width:40px;height:40px;"/>
+
+                        <p class="font14">{{playbill.singer.singerName}}</p>
+
+                        <p class="color_999"><span class="mr20"><i class="icon icon-gray icon-heart mr5"></i>{{playbill.numberOfPraises}}</span><span><i
+                                    class="icon icon-gray icon-comment mr5"></i>{{playbill.numberOfComments}}</span></p>
+                    </div>
+                </li>
+            </ul>
+            <div class="p10">
+                <button type="button" class="btn btn-complete mr10" style="width:100%;" ng-click="createPlaybill()"><i
+                        class="icon icon-white icon-plus-sign"></i> 新增演出
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="content-r2 px20">
+        <div ng-if="playbills.length == 0" class="pt20">
+            <div class="alert center">当天没有表演节目</div>
+        </div>
+        <!--评论+抢歌-->
+        <div ng-hide="playbills.length == 0">
+            <div class="py20 oh" style="line-height:40px;" ng-repeat="playbillInfo in playbillInfos">
+                <div class="fl font14 mr20"><img class="thumbnail-circle mr10 fl" style="width:40px;height:40px;"
+                                                 onerror="this.src='img/thumb-user.png'" ng-src="{{image.filePath}}"
+                                                 ng-repeat="image in playbillInfo.singer.singerImages"
+                                                 ng-if="image.pictureType === 'PORTRAIT'"
+                                                 style="width:40px;height:40px;"><img class="thumbnail-circle mr20"
+                                                 src="img/thumb-user.png" alt=""
+                                                 ng-if="playbillInfo.singer.singerImages.length == 0"
+                                                 style="width:40px;height:40px;"/>{{playbillInfo.singer.singerName}}
+                </div>
+                <div class="fl mx20"><span class="color_999">演出时间：</span>{{playbillInfo.playbillDate| date:
+                    'yyyy-MM-dd'}}&nbsp;&nbsp;&nbsp;&nbsp;{{playbillInfo.fromTime| date: 'HH:mm'}} -
+                    {{playbillInfo.toTime| date: 'HH:mm'}}
+                </div>
+                <div class="fl"><span class="color_999">节目状态：</span><span class="color_red">{{playbillInfo.playbillState| playbillStateFilter}}</span>
+                </div>
+                <div class="fr" ng-switch on="playbillInfo.playbillState">
+                    <button type="button" class="btn btn-success mr10" ng-click="editPlaybill(playbillInfo.playbillId)">
+                        <i class="icon icon-white icon-pencil"></i> 编辑
+                    </button>
+                    <button type="button" class="btn btn-warning mr10" ng-click="closePlaybill(playbillInfo)"
+                            ng-switch-when="ACTIVE" ng-confirm-click="关闭抢歌功能之后用户不能抢歌，你确定要关闭么？"><i
+                            class="icon icon-white icon-ban-circle"></i> 关闭
+                    </button>
+                    <button type="button" class="btn btn-complete mr10" ng-click="reactivatePlaybill(playbillInfo)"
+                            ng-switch-when="INACTIVE" ng-confirm-click="激活抢歌关联的订单会被关闭，你确定激活么？"><i
+                            class="icon icon-white icon-check"></i> 激活
+                    </button>
+                    <button type="button" class="btn btn-danger mr10" ng-click="deletePlaybill(playbillInfo.playbillId)"
+                            ng-confirm-click="删除的节目单不能找回，你确定要删除么？"><i class="icon icon-white icon-trash"></i> 删除
+                    </button>
+                    <!--<a target="_blank" href="{{playbillInfo.shareUrl}}">
+                        <button type="button" class="btn " title="预览分享页"><i class="icon icon-share"></i> 预览分享页</button>
+                    </a>-->
+                </div>
+            </div>
+            <div>
+                <tabset>
+                    <tab heading="评论({{playbillUserActionsC.length}})">
+                        <div class="table-bg clear table-hover-icon" style="margin-top:-1px;">
+                            <div ng-if="playbillUserActionsC.length == 0" class="p20">
+                                <div class="alert center">暂无评论信息</div>
+                            </div>
+                            <table width="100%" class="table">
+                                <tr ng-repeat="playbillUserAction in playbillUserActionsC" ng-class="{'disabled':!playbillUserAction.checked}">
+                                    <td width="30">{{playbillUserActionsC.length - $index}}楼</td>
+                                    <td width="50"><img class="thumbnail-circle mr20 " src="img/thumb-user.png"
+                                                        style="width:30px;height:30px;"/></td>
+                                    <td><p><strong class="font14 mr20">{{playbillUserAction.userName}}</strong><span
+                                                class="color_999">{{playbillUserAction.actionDateTime| date: 'HH:mm:ss'}}</span>
+                                        </p>
+
+                                        <p class="color_666">{{playbillUserAction.comment}}</p></td>
+                                    <td  width="120">
+                                        <div class="hide">
+                                            <a class="fl mr20"title="删除评论"
+                                               ng-hide="disableDeleteUA(playbillUserAction)"
+                                               ng-click="deleteUserAction(playbillUserAction)"><i class="icon icon-red  icon-trash"></i>
+                                            </a>
+                                            <a class="fl mr20" title="激活评论"
+                                               ng-hide="playbillUserAction.checked"
+                                               ng-click="shield(playbillUserAction)"><i class="icon icon-blue icon-check"></i>
+                                            </a>
+                                            <a class="fl" title="屏蔽评论"
+                                               ng-hide="!playbillUserAction.checked"
+                                               ng-click="shield(playbillUserAction)"><i class="icon icon-ban-circle"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </tab>
+                    <tab heading="抢歌({{playbillUserActionsP.length}})">
+                        <div class="table-bg clear" style="margin-top:-1px;">
+                            <div ng-if="playbillUserActionsP.length == 0" class="p20">
+                                <div class="alert center">暂无抢歌信息</div>
+                            </div>
+
+                            <table width="100%" class="table">
+                                <tr ng-repeat="playbillUserAction in playbillUserActionsP">
+                                    <td width="50"><img class="thumbnail-circle mr20 " src="img/thumb-user.png"
+                                                        style="width:30px;height:30px;"/></td>
+                                    <td><p class="color_999"><strong class="font14 mr20 color_444">{{playbillUserAction.userName}}</strong>
+                                            点播了<strong
+                                                class="mr20 color_444">《{{playbillUserAction.comment}}》</strong><span>{{playbillUserAction.actionDateTime| date: 'HH:mm:ss'}}</span>
+                                        </p>
+
+                                        <p class="color_666">{{playbillUserAction.grabComment}}</p></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </tab>
+                </tabset>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>

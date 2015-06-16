@@ -1,0 +1,136 @@
+html, body {padding: 0;margin: 0 auto;width:100%;height:100%;}
+body{overflow:auto;}
+body, a,textarea,input{font-family:Microsoft YaHei,serif,Verdana, Geneva;font-size:12px;line-height:22px;color:#333;}
+div,dl, dt, dd, ul, ol, li, p, h1, h2, h3, h4, h5, h6, th, td, hr, blockquote {padding: 0;margin: 0;}
+a{color:#03ADDD;text-decoration:none;}
+a:hover{color:#005580;text-decoration:underline;outline:0; cursor:pointer;}
+a:active, a:focus ,div:focus{outline: none;}
+li {list-style: none;}
+img,iframe {border: 0; display:block;}
+table {border-collapse:collapse;border-spacing:0;}
+input{outline:none;}
+input[type=text],textarea{border: 1px solid #ddd;padding:5px;-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075);-moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075);box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075);-webkit-transition:border linear 0.2s,box-shadow linear 0.2s;-moz-transition:border linear 0.2s,box-shadow linear 0.2s;-ms-transition:border linear 0.2s,box-shadow linear 0.2s;-o-transition:border linear 0.2s,box-shadow linear 0.2s;transition:border linear 0.2s,box-shadow linear 0.2s;}
+input[type=text]:focus,textarea:focus{border-color:#FFF;-webkit-box-shadow:inset -1px -1px -1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6);-moz-box-shadow:inset -1px -1px -1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6);box-shadow:inset -1px -1px -1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6); background:#FFFFF0;border:1px solid #61AEEB \9;outline:none;}
+input[type=radio]{vertical-align:-2px;*vertical-align:-1px;}
+
+.clear{ clear:both;}
+
+.hide{display:none;}
+
+.table{white-space:nowrap;border-collapse:collapse;}
+
+select,input{vertical-align:middle;}
+
+.substr{white-space:nowrap;word-break:keep-all;overflow:hidden;text-overflow:ellipsis;}
+
+.fl{float:left;}
+.fr{float:right;}
+.oh{ overflow:hidden;}
+
+.m0 { margin:0; }
+.mb0 { margin-bottom:0; }
+.ml5 { margin-left:5px; }
+.mr5 { margin-right:5px; }
+.mt5 { margin-top:5px; }
+.mb5 { margin-bottom:5px; }
+.my5{margin:5px 0;}
+.mx5{margin:0 5px;}
+.ml10 { margin-left:10px; }
+.mr10 { margin-right:10px; }
+.mt10 { margin-top:10px; }
+.mb10 { margin-bottom:10px; }
+.my10{margin:10px 0;}
+.mx10{margin:0 10px;}
+.ml20 { margin-left:20px; }
+
+.mr20 { margin-right:20px; }
+.mt20 { margin-top:20px; }
+.mb20 { margin-bottom:20px; }
+.my20{margin:20px 0;}
+.mx20{margin:0 20px;}
+
+.p0 { padding:0; }
+.pl5 { padding-left:5px; }
+.pr5 { padding-right:5px; }
+.pt5 { padding-top:5px; }
+.pb5 { padding-bottom:5px; }
+.py5 { padding:5px 0;}
+.px5 { padding:0 5px;}
+.p10 { padding:10px; }
+.py10 { padding:10px 0; }
+.px10 { padding:0 10px; }
+.pl10 { padding-left:10px; }
+.pr10 { padding-right:10px; }
+.pt10 { padding-top:10px; }
+.pb10 { padding-bottom:10px; }
+.p10-20 { padding:10px 20px; }
+.p20 { padding:20px; }
+.py20 { padding:20px 0; }
+.px20 { padding:0 20px; }
+.pl20 { padding-left:20px; }
+.pr20 { padding-right:20px; }
+.pt20 { padding-top:20px; }
+.pb20 { padding-bottom:20px; }
+
+.font14{font-size:14px;}
+.font16{font-size:16px;}
+.font18{font-size:18px;}
+.font20{font-size:20px;}
+.font22{font-size:22px;}
+.font24{font-size:24px;}
+.font30{font-size:30px;}
+.font48{font-size:48px;}
+
+.b{font-weight:bold;}
+
+.color_cyan{color:#64B3B6;}
+.color_red{color:#F03838;}
+.color_green{color:#268B4E;}
+.color_black{color:#000;}
+.color_blue{color:#03ADDD;}
+.color_orange{color:#FF8800;}
+.color_brown{color:#B7831D;}
+.color_444{color:#444;}
+.color_555{color:#555;}
+.color_666{color:#666;}
+.color_777{color:#777;}
+.color_888{color:#888;}
+.color_999{color:#999;}
+.color_fff{color:#FFF;}
+
+.bg_fff{background:#FFF;}
+.bg_blue{background:#35AFB3;}
+.bg_green{background:#5A9D40;}
+.bg_purple{background:#D40E87;}
+.bg_orange{background:#FF7231;}
+
+.left{text-align:left;}
+.right{text-align:right;}
+.center{text-align:center;}
+.ti{text-indent:2em;}
+
+/*===========style=============*/
+.bg{ background-color: #EFEFF4;}
+.slide img{max-width:100%;width:100%;height:auto;min-height: 200px;}
+.share pre{font-size:14px;line-height:28px; border: none; background: none;padding:0;margin: 0; font-family: inherit;color:#666;word-break: break-all; word-wrap:break-word;}
+.col_title{color:#F03838;font-size: 16px; margin-bottom: 10px;}
+.col_label{background-color:#F03838;  border-radius: 6px 6px 0 0;color:#FFF;font-size:14px; display: inline-block;width:100px; text-align: center;padding:3px 0;margin-bottom: 10px;}
+.col_con{font-size:14px;line-height:28px;}
+.download{ background-color: rgba(0, 0, 0, 0.7); overflow: hidden;padding:5px 15px;color:#FFF;line-height:50px;}
+.download .fl {width:65%;}
+.download .download-logo{width:50px;height:50px; margin-right: 10px;float:left;}
+.btn-download{font-size:14px;color:#FFF !important; border:1px solid #FFF; border-radius: 4px; display: inline-block;padding:3px 10px;text-decoration: none !important;}
+.link{margin: 20px 0;}
+.link li{ position: relative;}
+.link li a{padding: 10px;display:block; border-bottom: 1px solid #DDD; background: #FFF;font-size:14px;color:#333;padding-right: 20px; text-decoration: none !important;}
+.link li:last-child a{border-bottom: 0;}
+.icon{width:16px;height:16px;display: inline-block;vertical-align: middle;margin-top:-2px;}
+.icon-address{ background: url("../img/iconfont-dizhi.png") no-repeat;}
+.icon-date{ background: url("../img/iconfont-shijian.png") no-repeat;}
+.icon-tel{ background: url("../img/iconfont-dianhua.png") no-repeat;}
+.icon-next{position: absolute;top:12px;right:10px;font-family: serif;font-size: 16px; font-style: normal;color:#BBB;}
+.cover{ background-color:rgba(0,0,0,0.7); position:fixed;top:0;left:0;right:0;bottom:0;z-index:3;}
+.btn-close{display: block;width:16px;height:16px; position: absolute;right:20px;top:20px; background: url("../img/close.png") no-repeat;text-indent: -9999px; background-size: 16px 16px;}
+.code{color:#FFF;font-size:16px; text-align: center;line-height: 30px; position: absolute;top:50%;left:0;right:0; margin-top: -180px;}
+.code img{width:200px;height:200px; margin: 30px auto 0;}
+#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;}

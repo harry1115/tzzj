@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN" ng-app="tzMediaApp" class="oh">
+<head>
+    <meta charset="utf-8">
+    <!--newly added-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--newly added-->
+    <title>嘟嘟囔囔</title>
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css"/>
+    <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.min.css"/>
+    <!-- [E]TZ1.0-->
+    <link href="css/basic.css" rel="stylesheet" type="text/css"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <!-- [E]TZ1.0-->
+    <script type="text/javascript" src="bower_components/jquery/jquery.min.js"></script>
+    <!-- shim is needed to support upload progress/abort for HTML5 and non-HTML5 FormData browsers.-->
+    <!-- use html5-shim.js instead if you just support HTML5 browsers and you need progress event-->
+    <!-- Note: shim.js MUST BE PLACED BEFORE angular.js and angular-file-upload.js AFTER angular.js-->
+    <script type="text/javascript" src="bower_components/ng-file-upload/angular-file-upload-shim.min.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-input-date/src/angular-input-date.js"></script>
+    <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-ui-grid/ui-grid.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-touch/angular-touch.min.js"></script>
+    <script type="text/javascript" src="bower_components/ng-file-upload/angular-file-upload.min.js"></script>
+    <script type="text/javascript"
+            src="bower_components/angular-bootstrap-datetimepicker/src/js/moment.min.js"></script>
+    <script type="text/javascript"
+            src="bower_components/angular-bootstrap-datetimepicker/src/js/moment.zh_cn.js"></script>
+    <script type="text/javascript"
+            src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+    <script type="text/javascript" src="bower_components/textAngular/dist/textAngular.min.js"></script>
+    <script type="text/javascript" src="bower_components/textAngular/dist/textAngular-sanitize.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-filter/angular-filter.js"></script>
+    <script type="text/javascript" src="js/controllers/logincontroller.js"></script>
+    <script type="text/javascript" src="js/controllers/usercontroller.js"></script>
+    <script type="text/javascript" src="js/controllers/administratorcontroller.js"></script>
+    <script type="text/javascript" src="js/controllers/shopcontroller.js"></script>
+    <script type="text/javascript" src="js/controllers/playbillcontroller.js"></script>
+    <script type="text/javascript" src="js/controllers/singercontroller.js"></script>
+    <script type="text/javascript" src="js/controllers/musiccontroller.js"></script>
+    <script type="text/javascript" src="js/controllers/productcontroller.js"></script>
+    <script type="text/javascript" src="js/controllers/ordercontroller.js"></script>
+    <script type="text/javascript" src="js/controllers/configurationcontroller.js"></script>
+
+    <script type="text/javascript" src="js/service/loginservice.js"></script>
+    <script type="text/javascript" src="js/service/userservice.js"></script>
+    <script type="text/javascript" src="js/service/shopservice.js"></script>
+    <script type="text/javascript" src="js/service/productservice.js"></script>
+    <script type="text/javascript" src="js/service/fileuploadservice.js"></script>
+    <script type="text/javascript" src="js/service/orderservice.js"></script>
+    <script type="text/javascript" src="js/service/fileuploadservice.js"></script>
+    <script type="text/javascript" src="js/service/configurationservice.js"></script>
+
+    <script type="text/javascript" src="js/filters.js"></script>
+    <script type="text/javascript" src="js/directives.js"></script>
+    <script type="text/javascript" src="js/constant.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/base.js"></script>
+</head>
+<body ng-class="pageClass" ng-cloak>
+<div ng-if="!isLoginView">
+    <div class="nav-l" ng-controller="LoadMenu">
+        <div class="p10 logo"><img src="img/logo1.png"></div>
+        <div ng-if="currentAdminRole!=='SUPER'">
+            <ul class="menu py10 tran2">
+                <li><a class="active" ng-click="openSubmenu($event)" href="#/order"><img
+                        src="img/iconfont-order.png">订单</a></li>
+                <li><a ng-click="openSubmenu($event)" href="#/activity"><img
+                        src="img/iconfont-huodong.png">活动</a></li>
+                <li><a ng-click="openSubmenu($event)" href="#/playbill"><img
+                        src="img/iconfont-jiemucebianlan.png">节目单</a></li>
+                <li><a ng-click="openSubmenu($event)"><img
+                        src="img/iconfont-shangpin.png">商品管理<span class="m-on">></span></a>
+                    <ul class="submenu ">
+                        <li><a ng-click="submenuClick($event)" href="#/producttype">分类</a></li>
+                        <li><a ng-click="submenuClick($event)" href="#/product">商品</a></li>
+                    </ul>
+                </li>
+                <!--<li><a><img src="img/iconfont-shangpin.png">票务管理<span>></span></a>
+                <ul class="submenu " >
+                <li ><a href="#/ticket">票务</a></li>
+                <li ><a href="#/ticketLog">订票</a></li>
+                </ul>
+                </li>-->
+                <li><a ng-click="openSubmenu($event)"><img
+                        src="img/iconfont-guanliyuan.png">系统设置<span class="m-on">></span></a>
+                    <ul class="submenu ">
+                        <li><a ng-click="submenuClick($event)" href="#/password">修改密码</a></li>
+                    </ul>
+                </li>
+                <li><a href="#/logout"><img src="img/iconfont-tuichu.png">退出</a></li>
+            </ul>
+        </div>
+        <div ng-if="currentAdminRole==='SUPER'">
+            <ul class="menu py10 tran2" ng-if="currentEntrance!=='admin'">
+                <li><a class="active" ng-click="openSubmenu($event)" href="#/order"><img
+                        src="img/iconfont-order.png">订单</a></li>
+                <li><a ng-click="openSubmenu($event)" href="#/activity"><img
+                        src="img/iconfont-huodong.png">活动</a></li>
+                <li><a ng-click="openSubmenu($event)" href="#/playbill"><img
+                        src="img/iconfont-jiemucebianlan.png">节目单</a></li>
+
+
+                <li><a ng-click="openSubmenu($event)"><img
+                        src="img/iconfont-shangpin.png">商品管理<span class="m-on">></span></a>
+                    <ul class="submenu">
+                        <li><a ng-click="submenuClick($event)" href="#/producttype">分类</a></li>
+                        <li><a ng-click="submenuClick($event)" href="#/product">商品</a></li>
+                    </ul>
+                </li>
+                <li><a href="#/logout"><img src="img/iconfont-tuichu.png">退出</a></li>
+            </ul>
+            <ul class="menu py10 tran2" ng-if="currentEntrance==='admin'">
+
+                <li><a class="active" ng-click="openSubmenu($event)" href="#/shop"><img
+                        src="img/iconfont-dianpu.png">店铺管理</a></li>
+
+                <li><a ng-click="openSubmenu($event)" href="#/system-activity"><img
+                        src="img/iconfont-huodong.png">活动管理</a></li>
+                <li><a ng-click="openSubmenu($event)"><img
+                        src="img/iconfont-ttpodicon.png">艺人管理<span class="m-on">></span></a>
+                    <ul class="submenu ">
+                        <li><a ng-click="submenuClick($event)" href="#/singer">歌手</a></li>
+                        <li><a ng-click="submenuClick($event)" href="#/music">乐手</a></li>
+                    </ul>
+                </li>
+                <li><a ng-click="openSubmenu($event)"><img
+                        src="img/iconfont-guanliyuan.png">用户管理<span class="m-on">></span></a>
+                    <ul class="submenu">
+                        <li><a ng-click="submenuClick($event)" href="#/user">用户</a></li>
+                        <li><a ng-click="submenuClick($event)" href="#/userfeedback">用户反馈</a></li>
+                        <li><a ng-click="submenuClick($event)" href="#/coupondefinition">优惠券</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a ng-click="openSubmenu($event)"><img
+                        src="img/iconfont-guanliyuan.png">系统设置<span class="m-on">></span></a>
+                    <ul class="submenu ">
+                        <li><a ng-click="submenuClick($event)" href="#/administrator">管理员</a></li>
+                        <li><a ng-click="submenuClick($event)" href="#/password">修改密码</a></li>
+                        <li><a ng-click="submenuClick($event)" href="#/configuration">APP配置</a></li>
+                    </ul>
+                </li>
+                <li><a href="#/logout"><img src="img/iconfont-tuichu.png">退出</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="nav-header" ng-controller="LoadMenu">
+        <div ng-if="currentAdminRole!=='SUPER'">
+            <div class="fl nav-btn tran2"><a class="mr20" ng-click="searchNewOrder()"><img
+                    src="img/iconfont-wodedingdan.png"/>普通订单<span>{{msg.newOrders}}</span></a><a
+                    class="mx20" ng-click="searchGrabSongOrder()"><img
+                    src="img/iconfont-iconfontttpodicon3.png"/>抢歌订单<span>{{msg.grabSongOrders}}</span></a></div>
+            <div class="fr nav-userinfo"><img class="mr10" onerror="this.src='img/thumb-user.png'"
+                                              ng-src="{{administrator.administratorImages.length==0?'img/thumb-user.png':administrator.administratorImages[0].filePath}}"/><span
+                    class=""><strong>{{administrator.userName}}</strong> ({{getShopName(administrator.shopId)}})<label
+                    class="label label-success ml5" style="margin-top: -3px;">{{administrator.adminRole |
+                adminRoleFilter}}</label></span></div>
+        </div>
+        <div ng-if="currentAdminRole==='SUPER'">
+
+
+            <div class="dropdown fl">
+                <i class="icon icon-map-marker mr5"></i>选择管理入口：
+                <div class="btn-group tran2">
+                    <a class="dropdown-toggle select-btn" onclick="$(this).next().fadeIn().focus();"><span
+                            ng-bind="currentEntrance=='admin'?'系统功能':currentEntrance"></span></a>
+                    <ul class="dropdown-menu" onblur="$(this).fadeOut();" tabindex="-1"
+                        style="overflow: auto;max-height:500px;">
+                        <li><a ng-click="changeAdmin()">系统功能</a></li>
+                        <li ng-repeat="shop in shops" ng-if="shop.o2o"><a
+                                ng-click="changeShop(shop)">{{shop.shopName}}</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="fr nav-userinfo"><img class="mr10" onerror="this.src='img/thumb-user.png'"
+                                              ng-src="{{administrator.administratorImages.length==0?'img/thumb-user.png':administrator.administratorImages[0].filePath}}"/><span><strong>{{administrator.userName}}</strong> <label
+                    class="label label-success ml5" style="margin-top: -3px;">{{administrator.adminRole |
+                adminRoleFilter}}</label></span></div>
+        </div>
+    </div>
+</div>
+<div ng-class="{'content content-r':!isLoginView}" ng-view></div>
+</body>
+</html>

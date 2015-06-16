@@ -1,0 +1,72 @@
+<div>
+
+    <div class="">
+        <div class="search-form search-form-inline" style="height:44px;">
+            <ul>
+                <li>
+                    <label>
+                        <div class="btn-group">
+                            <a class="dropdown-toggle select-btn" ng-click="openDropdown($event)"><span>{{conditionId.name}}</span></a>
+                            <ul class="dropdown-menu" id="conditionId" ng-blur="closeDropdown($event)" tabindex="-1">
+                                <li ng-repeat="conditionType in conditionTypes" ng-click="changeCondition(conditionType)"><a>{{conditionType.name}}</a></li>
+                            </ul>
+                        </div></label>
+                    <input type="text" class="txt" ng-model="userSearchCondition.id"/>
+                </li>
+                <li>
+                    <label>起止日期：</label>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle from-date-toggle-select" id="fromCreationDateLabel" role="button" data-toggle="dropdown" data-target="#" href="">
+                            <div class="input-group">
+                                <input class="txt input-date"  type="text" ng-readonly="true"
+                                       value="{{ userSearchCondition.fromCreationDate | date: 'yyyy-MM-dd' }}" />
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="fromCreationDateLabel">
+                            <datetimepicker data-ng-model="userSearchCondition.fromCreationDate"
+                                            data-datetimepicker-config="{ startView:'day', minView:'day', dropdownSelector: '.from-date-toggle-select' }"></datetimepicker>
+                        </ul>
+                    </div>
+
+                    —
+                    <div class="dropdown">
+                        <a class="dropdown-toggle to-date-toggle-select" id="toCreationDateLabel" role="button" data-toggle="dropdown" data-target="#" href="">
+                            <div class="input-group">
+                                <input class="txt input-date" type="text" ng-readonly="true"
+                                       value="{{ userSearchCondition.toCreationDate | date: 'yyyy-MM-dd' }}" />
+
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="toCreationDateLabel">
+                            <datetimepicker data-ng-model="userSearchCondition.toCreationDate"
+                                            data-datetimepicker-config="{ startView:'day', minView:'day', dropdownSelector: '.to-date-toggle-select' }"></datetimepicker>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-primary mr10" ng-click="searchUser()"><i class="icon icon-white icon-search"></i> 查询</button>
+                    <button type="button" class="btn" ng-click="clearUser()"><i class="icon icon-refresh"></i> 清空</button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="px20">
+            <div class="table-bg"  ng-class="{'table-load':isLoading,'table-nodata':gridOptions.data.length==0}" >
+                <div id="cgGrid" ui-grid="gridOptions" ui-grid-auto-resize ui-grid-selection ui-grid-pagination external-scopes="userListScope"  ng-style="initTableHeight()"></div>
+            </div>
+            <div class="page">
+                <div class="pageinfo fl mr10">当前 
+                    <input class="input-sm txt" style="width:40px;" type="number"  id="inputPage" ng-model="currentPage" ng-change="gridApi.pagination.seek(currentPage)"/>
+                    <span> / {{gridApi.pagination.getTotalPages()}}</span>
+                    页，共{{gridOptions.data.length}}条数据</div>
+                <div class="pagination fr">
+                    <ul>
+                        <li> <button type="button" ng-click="previousPage()">上一页</button></li>
+                        <li><button type="button" ng-click="nextPage()">下一页</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

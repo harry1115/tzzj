@@ -1,0 +1,52 @@
+<div>
+    <form novalidate >
+        <div class="search-form search-form-inline" style="height:44px;">
+            <ul class="fl">
+                <li>
+                    <label>活动主题：</label>
+                    <input type="text" class="txt" ng-model="activitySearchCondition.activitySubject" />
+                </li>
+                <li>
+                    <label>开始日期：</label>
+                    <div class="dropdown"> <a class="dropdown-toggle my-toggle-select" role="button" data-toggle="dropdown" data-target="#" href="">
+                            <div class="input-group">
+                                <input class="txt input-date" type="text" ng-readonly="true" 
+                                       value="{{ activitySearchCondition.activityDate | date: 'yyyy-MM-dd' }}" />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> </div>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="ActivityDateLabel">
+                            <datetimepicker data-ng-model="activitySearchCondition.activityDate"
+                                            data-datetimepicker-config="{ startView:'day', minView:'day', dropdownSelector: '.my-toggle-select' }"></datetimepicker>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-primary mr10" ng-click="searchActivity()"><i class="icon icon-white icon-search"></i> 查询</button>
+                    <button type="button" class="btn" ng-click="clearActivity()"><i class="icon icon-refresh"></i> 清空</button>
+                </li>
+            </ul>
+            <div class="fr" style="margin-top:8px;">
+                <button type="button" class="btn btn-complete mr10" ng-click="createNewActivity()"><i class="icon icon-white icon-plus-sign"></i> 新增活动</button>
+                <!--<button type="button" class="btn btn-danger"><i class="icon icon-white icon-trash"></i> 删除</button>-->
+            </div>
+        </div>
+    </form>
+    <div class="px20">
+        <div class="table-bg"   ng-class="{'table-load':isLoading,'table-nodata':gridOptions.data.length==0}" >
+            <div id="cgGrid" ui-grid="gridOptions"  ui-grid-auto-resize ui-grid-selection ui-grid-pagination external-scopes="activityListScope" ng-style="initTableHeight()"></div>
+        </div>
+
+        <div class="page">
+            <div class="pageinfo fl mr10">当前 
+                <input class="input-sm txt" style="width:40px;" type="number"  id="inputPage" ng-model="currentPage" ng-change="gridApi.pagination.seek(currentPage)"/>
+                <span> / {{gridApi.pagination.getTotalPages()}}</span>
+                页，共{{gridOptions.data.length}}条数据</div>
+            <div class="pagination fr">
+                <ul>
+                    <li> <button type="button" ng-click="previousPage()">上一页</button></li>
+                    <li><button type="button" ng-click="nextPage()">下一页</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+<div>
+    <div>
+        <div class="form-btn p20 oh">
+            <button type="button" ng-click="cancel()" class="btn mr10"><i class="icon icon-arrow-left"></i> 返回</button>
+            <button ng-disabled="ticket.ticketName==null||ticket.meetValue==null||ticket.faceValue==null" type="button" ng-click="createNewTicket()" class="btn btn-primary mr10"><i class="icon icon-white icon-ok-circle"></i> 保存</button>
+            <!--<button type="button" class="btn btn-danger mr10"><i class="icon icon-white icon-trash"></i> 删除</button>-->
+        </div>
+        <div class="p20">
+            <div class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label"><span class="color_red mr5">*</span>票务名称：</label>
+                    <div class="controls">
+                        <input type="text" class="txt input-xlarge span3" ng-model="ticket.ticketName"  required />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label"><span class="color_red mr5">*</span>活动主题：</label>
+                    <div class="controls">
+                        <select  ng-model="ticket.activityId" ng-options="shop.shopId as shop.shopName for shop in shops">
+                            <option value="">-- 请选择 --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label"><span class="color_red mr5">*</span>抵扣额：</label>
+                    <div class="controls">
+                        <div class="input-prepend input-append input-price"> <span class="add-on">￥</span>
+                            <input class="txt span1" type="text" ng-model="ticket.faceValue"  required />
+                            <span class="add-on">元</span> </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">截止日期：</label>
+
+                    <div class="controls">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle my-toggle-select" id="expiryDateLabel" role="button"
+                               data-toggle="dropdown" data-target="#" href="">
+                                <div class="input-group">
+                                    <input class="txt input-date" type="text" ng-readonly="true"
+                                           value="{{ ticket.expiryDate | date: 'yyyy-MM-dd' }}"/>
+
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="expiryDateLabel">
+                                <datetimepicker data-ng-model="ticket.expiryDate"
+                                                data-datetimepicker-config="{ startView:'day', minView:'day', dropdownSelector: '.my-toggle-select' }"></datetimepicker>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

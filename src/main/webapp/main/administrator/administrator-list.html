@@ -1,0 +1,14 @@
+<div>
+    <div class="search-form search-form-inline oh">
+
+        <div class="fl" style="margin-top: 8px;">
+            <button class="btn btn-complete mr10" ng-click="createNewAdministrator()"><i class="icon icon-white icon-plus-sign"></i>新增管理员</button>
+        </div>
+    </div>
+    <div class="px20">
+        <div class="table-bg">
+            <div id="cgGrid" ui-grid="gridOptions" ui-grid-selection ui-grid-auto-resize external-scopes="administratorListScope" class="grid-height" ng-style="initTableHeight()"></div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,161 @@
+<div>
+    <div>
+        <div class="form-btn p20 oh">
+            <button type="button" ng-click="cancel()"  class="btn mr10" ><i class="icon icon-arrow-left"></i> 返回</button>
+            <button ng-disabled="couponDefinition.couponName==null||couponDefinition.meetValue==null||couponDefinition.faceValue==null" type="button" ng-click="updateCouponDefinition()"  class="btn btn-primary mr10"><i class="icon icon-white icon-ok-circle"></i> 保存</button>
+            <!--<button type="button" class="btn btn-danger mr10"><i class="icon icon-white icon-trash"></i> 删除</button>-->
+        </div>
+        <div class="p20">
+            <div class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label"><span class="color_red mr5">*</span>优惠券名称：</label>
+                    <div class="controls">
+                        <input type="text" class="txt input-xlarge span3" ng-model="couponDefinition.couponName"  required />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label"><span class="color_red mr5">*</span>满额：</label>
+                    <div class="controls">
+                        <div class="input-prepend input-append input-price"> <span class="add-on">￥</span>
+                            <input class="txt span1" type="text" ng-model="couponDefinition.meetValue"  required />
+                            <span class="add-on">元</span> </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label"><span class="color_red mr5">*</span>抵扣额：</label>
+                    <div class="controls">
+                        <div class="input-prepend input-append input-price"> <span class="add-on">￥</span>
+                            <input class="txt span1" type="text" ng-model="couponDefinition.faceValue"  required />
+                            <span class="add-on">元</span> </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">截止日期：</label>
+                    <div class="controls">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle my-toggle-select" id="expiryDateLabel" role="button" data-toggle="dropdown" data-target="#" href="">
+                                <div class="input-group">
+                                    <input class="txt input-date"   type="text" ng-readonly="true" value="{{ couponDefinition.expiryDate | date: 'yyyy-MM-dd' }}" />
+
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="expiryDateLabel">
+                                <datetimepicker data-ng-model="couponDefinition.expiryDate"
+                                                data-datetimepicker-config="{ startView:'day', minView:'day', dropdownSelector: '.my-toggle-select' }"></datetimepicker>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="control-group">
+                   <label class="control-label">是否通用：</label>
+                   <div class="controls"><label class="mr20 fl mt5"><input type="radio" checked class="mr5" name="ckbox" />通用</label><label class="ml20 fl mt5"><input type="radio" class="mr5" name="ckbox"/>适用指定店铺</label></div>
+                 </div>
+                 <div class="control-group hide" id="ChangeStore">
+                   <label class="control-label">适用店铺：</label>
+                   <div class="controls">
+                     <div class="mb10">
+                       <button class="btn btn-complete" onClick="$('#cover1').fadeIn();"><i class="icon icon-white icon-plus-sign"></i> 选择适用店铺</button><a class="ml20">清空</a></div>
+                     <div class="span5 well">
+                       <table width="100%" class="table table-hover-icon">
+                         <tr>
+                           <td width="20">1</td>
+                           <td>TZ House音乐吧</td>
+                           <td width="50"><a class="hide fr" title="移除歌曲"><i class="icon icon-red icon-trash"></i></a></td>
+                         </tr>
+                         <tr>
+                           <td width="20">2</td>
+                           <td>TZ House音乐吧</td>
+                           <td width="50"><a class="hide fr" title="移除歌曲"><i class="icon icon-red icon-trash"></i></a></td>
+                         </tr>
+                         <tr>
+                           <td width="20">3</td>
+                           <td>TZ House音乐吧</td>
+                           <td width="50"><a class="hide fr" title="移除歌曲"><i class="icon icon-red icon-trash"></i></a></td>
+                         </tr>
+                         <tr>
+                           <td width="20">4</td>
+                           <td>TZ House音乐吧</td>
+                           <td width="50"><a class="hide fr" title="移除歌曲"><i class="icon icon-red icon-trash"></i></a></td>
+                         </tr>
+                         <tr>
+                           <td width="20">5</td>
+                           <td>TZ House音乐吧</td>
+                           <td width="50"><a class="hide fr" title="移除歌曲"><i class="icon icon-red icon-trash"></i></a></td>
+                         </tr>
+                         <tr>
+                           <td width="20">6</td>
+                           <td>TZ House音乐吧</td>
+                           <td width="50"><a class="hide fr" title="移除歌曲"><i class="icon icon-red icon-trash"></i></a></td>
+                         </tr>
+                         <tr>
+                           <td width="20">7</td>
+                           <td>TZ House音乐吧</td>
+                           <td width="50"><a class="hide fr" title="移除歌曲"><i class="icon icon-red icon-trash"></i></a></td>
+                         </tr>
+                         <tr>
+                           <td width="20">8</td>
+                           <td>TZ House音乐吧</td>
+                           <td width="50"><a class="hide fr" title="移除歌曲"><i class="icon icon-red icon-trash"></i></a></td>
+                         </tr>
+                         <tr>
+                           <td width="20">9</td>
+                           <td>TZ House音乐吧</td>
+                           <td width="50"><a class="hide fr" title="移除歌曲"><i class="icon icon-red icon-trash"></i></a></td>
+                         </tr>
+                         <tr>
+                           <td width="20">10</td>
+                           <td>TZ House音乐吧</td>
+                           <td width="50"><a class="hide fr" title="移除歌曲"><i class="icon icon-red icon-trash"></i></a></td>
+                         </tr>
+                       </table>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>-->
+                <!--<div class="cover" id="cover1">
+                  <div class="modal">
+                    <div class="modal-header"> <a href="#" class="close" data-dismiss="modal" onClick="$(this).closest('.cover').fadeOut()">×</a>
+                      <h3>请选择适用店铺</h3>
+                    </div>
+                    <div class="modal-body" style="min-height:400px;">
+                      <table width="100%" class="table modal-body-list">
+                        <tr>
+                          <td width="10"><input type="checkbox" class="checkbox mr20"/></td>
+                          <td>TZ House音乐吧</td>
+                        </tr>
+                        <tr>
+                          <td><input type="checkbox" class="checkbox mr20"/></td>
+                          <td>TZ House音乐吧</td>
+                        </tr>
+                        <tr>
+                          <td><input type="checkbox" class="checkbox mr20"/></td>
+                          <td>TZ House音乐吧</td>
+                        </tr>
+                        <tr>
+                          <td><input type="checkbox" class="checkbox mr20"/></td>
+                          <td>TZ House音乐吧</td>
+                        </tr>
+                        <tr>
+                          <td><input type="checkbox" class="checkbox mr20"/></td>
+                          <td>TZ House音乐吧</td>
+                        </tr>
+                        <tr>
+                          <td><input type="checkbox" class="checkbox mr20"/></td>
+                          <td>TZ House音乐吧</td>
+                        </tr>
+                        <tr>
+                          <td><input type="checkbox" class="checkbox mr20"/></td>
+                          <td>TZ House音乐吧</td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="modal-footer">
+                      <button href="#" class="btn btn-primary">确定</button>
+                      <button href="#" class="btn" onClick="$(this).closest('.cover').fadeOut()">取消</button>
+                    </div>
+                  </div>
+                </div>-->

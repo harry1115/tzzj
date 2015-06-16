@@ -1,0 +1,42 @@
+<div>
+  <div class="search-form search-form-inline oh">
+    <ul class="fl">
+      <li>
+        <label>姓名：</label>
+        <input type="text" class="txt" id="inputSingerName" ng-model="singerSearchCondition.singerName"  />
+      </li>
+      <li>
+        <label>徽章等级：</label>
+        <select id="inputBadgeType" ng-model="singerSearchCondition.badgeType"
+                                    ng-options="bt.id as bt.name for bt in badgeTypes" >
+          <option value="">-- 请选择 --</option>
+        </select>
+      </li>
+      <li>
+        <button type="button" class="btn btn-primary mr10"  ng-click="searchSinger()" ><i class="icon icon-white icon-search"></i> 查询</button>
+        <button type="button" class="btn" ng-click="clearSinger()" ><i class="icon icon-refresh"></i> 清空</button>
+      </li>
+    </ul>
+    <div class="fr" style="margin-top:8px;">
+      <button class="btn btn-complete mr10" ng-click="createSinger()" ><i class="icon icon-white icon-plus-sign"></i> 新增歌手</button>
+      <!--<button type="button" class="btn btn-danger"><i class="icon icon-white icon-trash"></i> 删除</button>-->
+    </div>
+  </div>
+  <div class="px20">
+    <div class="table-bg"  ng-class="{'table-nodata':gridOptions.data.length==0}">
+        <div id="cgGrid" ui-grid="gridOptions" ui-grid-auto-resize ui-grid-selection ui-grid-pagination external-scopes="singerListScope" class="thumbGrid"  ng-style="initTableHeight()"></div>
+    </div>
+    <div class="page">
+      <div class="pageinfo fl mr10">当前
+        <input class="input-sm txt" style="width:40px;" type="number"  id="inputPage" ng-model="currentPage" ng-change="gridApi.pagination.seek(currentPage)"/>
+        <span> / {{gridApi.pagination.getTotalPages()}}</span>
+        页，共{{gridOptions.data.length}}条数据</div>
+      <div class="pagination fr">
+        <ul>
+          <li> <button type="button" ng-click="previousPage()">上一页</button></li>
+          <li><button type="button" ng-click="nextPage()">下一页</button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

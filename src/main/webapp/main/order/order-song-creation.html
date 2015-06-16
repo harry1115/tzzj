@@ -1,0 +1,69 @@
+<div>
+    <h3>新增定单</h3>
+    <form novalidate="novalidate" class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="inputOrderNumbere">定单编号:</label>
+
+            <div class="controls">
+                <input type="text" id="inputOrderNumbere" ng-model="order.orderNumber" placeholder="Order Number"/>
+            </div>
+        </div>        
+        <div class="control-group">
+            <label class="control-label" for="inputUserId">下单用户:</label>
+
+            <div class="controls">
+                <input type="text" id="inputUserId" ng-model="order.userId" placeholder="Order User"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputPaymentTerm">支付方式:</label>
+
+            <div class="controls">
+                <input type="text" id="inputPaymentTerm" ng-model="order.paymentTerm" placeholder="Payment Term"/>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="inputTableNumber">桌位号:</label>
+            
+            <div class="controls">
+                <input type="number" id="inputTableNumber" ng-model="order.tableNumber" placeholder="Table Number"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputShopName">店铺名:</label>
+
+            <div class="controls">
+                <!--<input type="text" id="inputShopName" ng-model="order.shop.shopName"/>-->
+                <select id="inputShopName" ng-model="activity.shopId" ng-options="shop.shopId as shop.shopName for shop in shops">                    
+                    <option value="">-- 请选择 --</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputOrderTime">下单时间:</label>
+
+            <div class="dropdown">
+                <a class="dropdown-toggle my-toggle-select" id="OrderTimeLabel" role="button" data-toggle="dropdown" data-target="#" href="">
+                    <div class="input-append">
+                       <input type="text" id="inputOrderTime"  ng-readonly="true" value="{{ order.orderTime | date: 'yyyy-MM-dd HH:mm:ss' }}" />
+                        
+                        <span class="add-on"><i class="icon-calendar"></i></span>
+                    </div>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="OrderTimeLabel">
+                    <datetimepicker data-ng-model="order.orderTime"
+                                    data-datetimepicker-config="{startView:'hour', minView:'minute', dropdownSelector: '.my-toggle-select' }">
+                    </datetimepicker>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <div class="controls">
+                <a ng-click="createOrder()" class="btn btn-small btn-primary">创建</a>
+                <a ng-click="cancel()" class="btn btn-small btn-primary">返回</a>
+            </div>
+        </div>
+    </form>
+</div>

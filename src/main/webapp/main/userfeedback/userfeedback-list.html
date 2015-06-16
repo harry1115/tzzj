@@ -1,0 +1,67 @@
+<div>
+  
+  <div class="">
+    <div class="search-form search-form-inline" style="height:44px;">
+      <ul>
+        <li>
+          <label>用户：</label>
+          <input type="text" class="txt" ng-model="feedbackSearchCondition.userId"/>
+        </li>
+        <li>
+          <label>起止日期：</label>
+          <div class="dropdown">
+            <a class="dropdown-toggle from-date-toggle-select" id="fromDateLabel" role="button" data-toggle="dropdown" data-target="#" href="">
+              <div class="input-group">
+                <input class="txt input-date"  type="text" ng-readonly="true"
+                       value="{{ feedbackSearchCondition.fromDate | date: 'yyyy-MM-dd' }}" />
+              </div>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="fromDateLabel">
+              <datetimepicker data-ng-model="feedbackSearchCondition.fromDate"
+                              data-datetimepicker-config="{ startView:'day', minView:'day', dropdownSelector: '.from-date-toggle-select' }"></datetimepicker>
+            </ul>
+          </div>
+
+          —
+          <div class="dropdown">
+            <a class="dropdown-toggle to-date-toggle-select" id="toDateLabel" role="button" data-toggle="dropdown" data-target="#" href="">
+              <div class="input-group">
+                <input class="txt input-date" type="text" ng-readonly="true"
+                       value="{{ feedbackSearchCondition.toDate | date: 'yyyy-MM-dd' }}" />
+
+              </div>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="toDateLabel">
+              <datetimepicker data-ng-model="feedbackSearchCondition.toDate"
+                              data-datetimepicker-config="{ startView:'day', minView:'day', dropdownSelector: '.to-date-toggle-select' }"></datetimepicker>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <button type="button" class="btn btn-primary mr10"  ng-click="searchFeedback()"><i class="icon icon-white icon-search"></i> 查询</button>
+          <button type="button" class="btn"  ng-click="clearFeedback()"><i class="icon icon-refresh"></i> 清空</button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="px20">
+      <div class="tab-table">
+        <div class="oh" ng-repeat="(userId,feedbacks) in userfeedbacks | groupBy: 'userId'">
+          <div class="tab-title px20">
+            <div class="fl py20 mr20">
+              <input type="checkbox" />
+            </div>
+            <a class="row-fluid oh py20" onClick="$(this).parent().next().slideToggle('fast');"><span class="span2">帐户：{{userId}}</span><span class="span3">用户名：{{feedbacks[0].userName}}</span><span class=""><i class="icon icon-gray icon-comment mr5"></i>{{feedbacks.length}}</span></a></div>
+          <div class="tab-con">
+            <ul>
+              <li class="row-fluid"  ng-repeat="feedback in feedbacks"><span class="color_999 span2">{{feedback.feedBackDate| date: 'yyyy-MM-dd' }}</span><span class="span9">{{feedback.content}}</span> <span class="span1"><a class="hide fr" title="删除" ng-click="deleteUserfeedback(feedback)"><i class="icon icon-red icon-trash"></i></a></span> </li>
+
+            </ul>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

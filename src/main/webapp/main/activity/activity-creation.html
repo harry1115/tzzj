@@ -1,0 +1,66 @@
+<form novalidate>
+  <div class="form-btn p20 oh">
+    <button type="button" class="btn mr10"  ng-click="cancel()"><i class="icon icon-arrow-left"></i> 返回</button>
+    <button ng-disabled="activity.activitySubject==null" type="button" class="btn btn-primary mr10"  ng-click="createNewActivity()"><i class="icon icon-white icon-ok-circle"></i> 保存</button>
+  </div>
+  <div class="p20">
+    <div class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label"><span class="color_red mr5">*</span>活动主题：</label>
+        <div class="controls">
+          <input type="text" class="txt input-xlarge span7" ng-model="activity.activitySubject" required>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">活动类型：</label>
+        <div class="controls">
+          <input type="text" class="txt input-xlarge span2" ng-model="activity.activityType">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">显示顺序：</label>
+        <div class="controls">
+          <input type="number" class="txt input-xlarge span2" ng-model="activity.ordering">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">起始日期：</label>
+        <div class="controls">
+          <div class="dropdown"> <a class="dropdown-toggle my-toggle-select" id="fromDateLabel" role="button" data-toggle="dropdown" data-target="#" href="">
+            <div class="input-group">
+              <input class="txt input-date"  type="text" ng-readonly="true" value="{{ newFromDate | date: 'yyyy-MM-dd' }}" />
+            </div>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="fromDateLabel">
+              <datetimepicker data-ng-model="newFromDate"
+                                                data-datetimepicker-config="{ startView:'day', minView:'day', dropdownSelector: '.my-toggle-select' }"></datetimepicker>
+            </ul>
+          </div>
+          —
+          <div class="dropdown"> <a class="dropdown-toggle my-toggle-select my-toggle-select1" id="toDateLabel" role="button" data-toggle="dropdown" data-target="#" href="">
+            <div class="input-group">
+              <input class="txt input-date"  type="text" ng-readonly="true" value="{{ newToDate | date: 'yyyy-MM-dd' }}" />
+              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> </div>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="toDateLabel">
+              <datetimepicker data-ng-model="newToDate"
+                                                data-datetimepicker-config="{ startView:'day', minView:'day', dropdownSelector: '.my-toggle-select1' }"></datetimepicker>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">简介：</label>
+        <div class="controls">
+          <input type="text" class="txt span7"  ng-model="activity.shortDesc">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">描述：</label>
+        <div class="controls">
+          <textarea class="span7" style="height:150px;" ng-model="activity.activityDesc">></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,116 @@
+<div>
+
+    <div class="">
+        <div class="form-btn p20 oh">
+            <button type="button" class="btn mr10" title="返回"  ng-click="cancel()"><i class="icon icon-arrow-left"></i> 返回</button>
+            <button type="button" class="btn btn-primary mr10" ng-click="updateOrder()" 
+                    ng-if="order.orderStatus === 'TOBEPAID' || order.orderStatus === 'TOBECOLLECTED'"><i class="icon icon-white icon-ok-circle"></i> 保存</button>
+            <button type="button" class="btn btn-warning mr10" ng-click="closeOrder()" ng-confirm-click="关闭的订单不能打开，你确定要关闭么？" 
+                    ng-if="order.orderStatus === 'TOBEPAID' || order.orderStatus === 'TOBECOLLECTED'"><i class="icon icon-white icon-ban-circle"></i> 关闭</button>
+            <button type="button" class="btn btn-warning mr10" ng-click="refundOrder()"
+                    ng-if="order.orderStatus === 'PAID'"><i class="icon icon-white icon-exclamation-sign"></i> 退款</button>
+            <button type="button" class="btn btn-complete mr10" ng-click="collectFnOrder()" 
+                    ng-if="order.orderStatus === 'TOBECOLLECTED'"><i class="icon icon-white icon-check"></i> 已开单</button>
+            <button type="button" class="btn btn-complete mr10" ng-click="processOrder()"
+                    ng-if="order.orderStatus === 'PAID'"><i class="icon icon-white icon-check"></i> 已处理</button>
+            <button type="button" class="btn btn-danger" ng-click="deleteOrder()" ng-confirm-click="删除的订单不能找回，你确定要删除么？" 
+                    ng-if="order.orderStatus !== 'PROCESSED' || order.orderStatus !== 'PAID'"><i class="icon icon-white icon-trash"></i> 删除</button>
+        </div>
+        <div class="p20">
+            <div class=" form-title">订单信息</div>
+            <div class="form-inline oh mb20">
+                <ul>
+                    <li class="substr">
+                        <label><span class="color_red mr5">*</span>订单编号：</label>
+                        {{order.orderNumber}} </li>
+                    <li>
+                        <label>外部编号：</label>
+                        {{order.externalTransactionNumber}} </li>
+                    <li>
+                        <label><span class="color_red mr5">*</span>用户帐号：</label>
+                        {{order.userId}} </li>
+                    <li>
+                        <label><span class="color_red mr5">*</span>用户名：</label>
+                        {{order.userName}} </li>
+                    <li>
+                        <label>店铺名：</label>
+                        {{order.shopName}}</li>
+                    <li>
+                        <label>下单时间：</label>
+                        {{ order.orderTime | date: 'yyyy-MM-dd HH:mm:ss' }}</li>
+                    <li>
+                        <label>订单类型：</label>
+                        {{order.orderStatus | orderStatusFilter}}
+                    </li>
+                    <li>
+                        <label>支付方式：</label>
+                        <select ng-model="order.paymentTerm" 
+                                ng-options="o.id as o.name for o in paymentTerms">                    
+                        </select>
+                    </li>
+                    <li>
+                        <label>桌号：</label>
+                        <input type="number" class="txt" ng-model="order.tableNumber"/>
+                    </li>
+                    <li>
+                        <label>优惠券编号：</label>
+                        <input type="number" class="txt" ng-model="order.couponNumber"/>
+                    </li>
+                    <li>
+                        <label>优惠券抵扣：</label>
+                        <div class="input-prepend input-append input-price"> <span class="add-on">￥</span>
+                            <input class="txt span1" type="number" ng-model="order.couponAmount">
+                            <span class="add-on">元</span> </div>
+                    </li>
+                    <li>
+                        <label>总金额：</label>
+                        <div class="input-prepend input-append input-price"> <span class="add-on">￥</span>
+                            <input class="txt span1" type="number" ng-model="order.orderAmount">
+                            <span class="add-on">元</span> </div>
+                    </li>
+                    <li style="width:75%;">
+                        <label>备注：</label>
+                        <input type="text" class="txt" ng-model="order.comment"/>
+                    </li>
+                </ul>
+            </div>
+            <div class=" form-title">抢歌消费明细</div>
+            <div>
+                <table width="100%" border="0" class="table">
+                    <tr>
+                        <th height="30">歌手</th>
+                        <th>歌曲名称</th>
+                        <th>金额</th>
+                        <th>备注</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr ng-repeat="customerOrderLine in customerOrderLines">
+                        <td>
+                            <div>{{order.singerName}}</div> 
+                        </td>
+                        <td>
+                            <div>{{customerOrderLine.songName}}</div>
+                        </td>
+                        
+                        <td>
+                            <div>{{customerOrderLine.lineAmount| currency:"￥"}}</div>
+                        </td>
+                        <td>
+                            <div ng-show="$index == currentIndex"><input type="text" class="txt" ng-model="customerOrderLine.grabComment"/></div>
+                            <div ng-show="$index != currentIndex">{{customerOrderLine.grabComment}}</div>
+                        </td>
+                        <td>
+                            <div ng-show="$index != currentIndex">
+                                <button type="button" class="btn btn-success mr10" title="编辑" ng-click="editCustomerOrderLine(customerOrderLine,$index)"><i class="icon icon-white icon-pencil"></i></button>
+                                <button type="button" class="btn btn-danger hide" title="删除" ng-click="deleteCustomerOrderLine(customerOrderLine)"><i class="icon icon-white icon-trash"></i></button></div>
+                            <div ng-show="$index == currentIndex">
+                                <button type="button" class="btn btn-primary mr10" title="保存" ng-click="saveOrderLine(customerOrderLine,$index)"><i class="icon icon-white icon-ok-circle"></i></button>
+                                <button type="button" class="btn mr10" title="取消" ng-click="closeEditOrderLine($index)"><i class="icon icon-remove-circle"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

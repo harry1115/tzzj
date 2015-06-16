@@ -1,0 +1,158 @@
+<div>
+    <div>
+        <div class="form-btn p20 oh">
+            <button type="button" class="btn mr10"  ng-click="cancel()" ><i class="icon icon-arrow-left"></i> 返回</button>
+            <button ng-disabled="singer.singerName==null" type="button" ng-click="updateSinger()"  class="btn btn-primary mr10"><i class="icon icon-white icon-ok-circle"></i> 保存</button>
+            <!--<button type="button" class="btn btn-danger mr10"><i class="icon icon-white icon-trash"></i> 删除</button>-->
+            <button type="button" class="btn mr10"  onclick="$('.cover').fadeIn()"><i class="icon icon-share"></i> 预览分享页</button>
+        </div>
+        <div class="p20">
+            <div class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label"><span class="color_red mr5">*</span>姓名：</label>
+                    <div class="controls">
+                        <input type="text" class="txt input-xlarge span3" id="inputSingerName" ng-model="singer.singerName"  required />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">英文名：</label>
+                    <div class="controls"><input type="text" class="txt input-xlarge span3" id="inputEnglishName" ng-model="singer.englishName" ></div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">性别：</label>
+                    <div class="controls">
+                        <select class="span1"  id="inputGender" ng-model="singer.gender" ng-options="g.id as g.name for g in genders" >
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">徽章类型：</label>
+                    <div class="controls">
+                        <select class="span1"  id="inputBadgeType" ng-model="singer.badgeType" 
+                                ng-options="bt.id as bt.name for bt in badgeTypes" >
+
+                        </select>
+                        <p class="help-inline color_999 ml20">说明：列表中<i class="icon-level1">著名</i>表示著名，<i class="icon-level0">著名</i>表示普通。</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">显示顺序：</label>
+                    <div class="controls">
+                        <input type="text" class="txt input-xlarge span2"  id="inputSingerOrdering" ng-model="singer.ordering" >
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">头像：</label>
+                    <div class="controls" >
+                        <div ng-click="StartUpload('PORTRAIT')" class="fl span4" style="margin-right:50px;"><a  class="thumbnail fl mr20">
+                            <img  ng-src="{{singerImageP.filePath}}" ng-repeat="singerImageP in filterSingerImageP =(singer.singerImages | filter:'PORTRAIT')" class="portrait"/> <img src="img/thumb-add.png" alt="" ng-if="filterSingerImageP.length==0" />
+                               </a>
+                            <p class="color_black label label-inverse mb10">缩略图</p>
+                            <p class="color_999">提示：请上传尺寸为200x200jpg或者png图片</p>
+                        </div>
+                        <div ng-click="StartUpload('MAIN')" class="fl span4"><a  class="thumbnail fl mr20">
+                            <img  ng-src="{{singerImageM.filePath}}" ng-repeat="singerImageM in filterSingerImageM =(singer.singerImages | filter:'MAIN')" class="portrait"/> <img src="img/thumb-add.png" alt="" ng-if="filterSingerImageM.length==0" />
+                               </a>
+                            <p class="color_black label label-inverse mb10">原图</p>
+                            <p class="color_999">提示：请上传小于200K的jpg或者png图片，尺寸没有限制</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">相册：</label>
+                    <div class="controls">
+                        <ul class="thumbnails">
+                            <li ng-repeat="singerImageS in singer.singerImages" ng-if="singerImageS.pictureType === 'SUBTHUMB'" >
+                                <a class="thumbnail"><img ng-src="{{singerImageS.filePath}}" style="width:100px;height:100px" class="subsidiarypicture"/></a>  
+                                <a class="btn btn-danger thumbnail-btn" ng-click="removeImage(singerImageS)"><i class="icon icon-white icon-trash"></i></a>           
+                            </li>
+                            <li>
+                                <a ng-click="StartUpload('SUBSIDIARY')" class="thumbnail"> <img ng-src="img/thumb-add.png"  style="width:100px;height:100px" class="subsidiarypicture"/> </a>    
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <input class="hide" id="onfileUpload" ng-file-select="onFileSelect($files)" type="file" multiple/> 
+                <div class="control-group">
+                    <label class="control-label">目录简介：</label>
+                    <div class="controls">
+                        <input type="text" class="txt span7" ng-model="singer.shortDesc" >
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">个性签名：</label>
+                    <div class="controls">
+                        <input type="text" class="txt span7" ng-model="singer.signature" >
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">乐手描述：</label>
+                    <div class="controls">
+                        <textarea class="span7" style="height:120px;"  rows="6" ng-model="singer.singerDesc" ></textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">经历：</label>
+                    <div class="controls">
+                        <textarea class="span7" style="height:50px;" ng-model="singer.experience" ></textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">参与作品：</label>
+                    <div class="controls">
+                        <textarea class="span7" style="height:50px;"  ng-model="singer.works" ></textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">分享链接：</label>
+                    <div class="controls">
+                        <input type="text" class="txt span7" id="inputShareUrl" ng-model="singer.shareUrl" >
+                        <a class="ml20"  style="line-height:26px;"  onclick="$('.cover').fadeIn()">预览分享页</a> </div>
+                </div>
+                <div class="alert alert-error" data-ng-show="error"
+                     style="position: absolute;top:50%;left:50%;margin: -17px 0 0 -190px;">
+                    <a class="close" data-dismiss="alert" onClick="$(this).parent().hide;">×</a><span>&nbsp;&nbsp;上传错误: {{ error}}</span>
+                </div>
+                <div class="alert alert-success hide"
+                     style="position: absolute;top:50%;left:50%;margin: -17px 0 0 -190px;">
+                    <a class="close" data-dismiss="alert" onClick="$(this).parent().hide;">×</a><span>&nbsp;&nbsp;上传成功: {{ successMessage}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cover hide">
+    <a class="btn-close" onclick="$('.cover').hide()">关闭</a>
+    <div class="mobile-bg">
+        <div class="mobile-con">
+            <div class="share">
+                <div class="p10">
+                    <p class="font18 b color_red mb10">{{singer.singerName}}</p>
+
+                    <p class="font14">——{{singer.shortDesc}}</p>
+                </div>
+                <div class="slide"><img ng-src="{{singerImageM.filePath}}" ng-repeat="singerImageM in singer.singerImages" ng-if="singerImageM.pictureType === 'MAIN'"/></div>
+                <article class="p10 mb10">
+                    <p class="col_con"><pre>{{singer.singerDesc}}</pre></p>
+                </article>
+                <article class="p10 mb10">
+                    <p class="col_label">经历</p>
+
+                    <p class="col_con"><pre>{{singer.experience}}</pre></p>
+                </article>
+                <article class="p10">
+                    <p class="col_label">参与作品</p>
+
+                    <p class="col_con"><pre>{{singer.works}}</pre></p>
+                </article>
+            </div>
+            <div class="download">
+                <div class="fl"><img src="images/appicon.png" class="download-logo"/><span class="font18">嘟嘟囔囔</span></div>
+                <div class="fr"><a class="btn-download" onClick="downloadApp()">下载APP</a></div>
+            </div>
+            <script type="text/javascript" src="js/share.js"></script>
+        </div>
+    </div>
+</div>

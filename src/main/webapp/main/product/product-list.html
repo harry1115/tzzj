@@ -1,0 +1,52 @@
+<div>
+    <div class="nav-2">
+        <div class="menu3">
+            <div class="menu3-title">商品分类<a class="fr mr10 mt5" href="#/producttype" title="分类管理"><i class="icon icon-cog icon-gray"></i></a></div>
+            <ul>
+                <li ng-class="{'active':$index==CurrentSelectIndex}"  ng-repeat ="productType in productTypes" ><a ng-click="SetCurrentType(productType.typeId,$index)" >{{productType.typeName}}</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="content-r2">
+        <div>
+            <form novalidate="novalidate" class="search-form search-form-inline oh">
+                <ul class="fl">
+                    <li>
+                        <label>商品名称：</label>
+                        <input type="text" class="txt"  ng-model="productSearchCondition.productName"/>
+                    </li>
+                    <li>
+                        <label>商品状态：</label>
+                        <select ng-model="productSearchCondition.sellable"  ng-options="ps.id as ps.name for ps in productStates">
+                            <option value="">-- 请选择 --</option>
+                        </select>
+                    </li>
+                    <li>
+                        <button type="button" ng-click="searchProduct()" class="btn btn-primary mr10"><i class="icon icon-white icon-search"></i> 查询</button>
+                        <button type="button" ng-click="clearProduct()" class="btn"><i class="icon icon-refresh"></i> 清空</button>
+                    </li>
+                </ul>
+                <div class="fr" style="margin-top:8px;">
+                    <button type="button" ng-click="createProduct()" class="btn btn-complete mr10"><i class="icon icon-white icon-plus-sign"></i> 新增商品</button>
+                </div>
+            </form>
+            <div class="px20">
+                <div class="table-bg clear"  ng-class="{'table-nodata':gridOptions.data.length==0}">
+                    <div id="cgGrid" ui-grid="gridOptions" ui-grid-selection ui-grid-pagination ui-grid-auto-resize external-scopes="productListScope" class="thumbGrid"  ng-style="initTableHeight()"></div>
+                </div>
+                <div class="page">
+                    <div class="pageinfo fl mr10">当前 
+                        <input class="input-sm txt" style="width:40px;" type="number"  id="inputPage" ng-model="currentPage" ng-change="gridApi.pagination.seek(currentPage)"/>
+                        <span> / {{gridApi.pagination.getTotalPages()}}</span>
+                        页，共{{gridOptions.data.length}}条数据</div>
+                    <div class="pagination fr">
+                        <ul>
+                            <li> <button type="button" ng-click="previousPage()">上一页</button></li>
+                            <li><button type="button" ng-click="nextPage()">下一页</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

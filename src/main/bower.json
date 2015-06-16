@@ -1,0 +1,24 @@
+{
+  "name": "TZMediaWebMuscle",
+  "description": "TZMedia Web Muscle",
+  "version": "1.0_M1",
+  "homepage": "www.comgroup.cn",
+  "license": "www.comgroup.cn",
+  "private": true,
+  "dependencies": {
+    "angular": "1.2.x",
+    "json3": "~3.2.4",
+    "angular-mocks": "~1.2.x",
+    "bootstrap": "~3.3.1",
+    "angular-route": "~1.2.x",
+    "angular-resource": "~1.2.x",
+    "angular-cookies": "~1.2.x",
+    "angular-touch": "~1.2.x",
+    "jquery": "1.10.2",
+    "angular-animate": "1.2.28",
+    "angular-input-date": "~1.0.3",
+    "ng-file-upload": "1.4.0",
+    "angular-bootstrap-datetimepicker": "latest",
+    "textAngular": "latest"
+  }
+}

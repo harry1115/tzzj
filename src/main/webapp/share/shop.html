@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="share">
+<head>
+    <meta charset="UTF-8">
+    <title>音乐，在这里温柔生长</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../css/share.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?type=quick&ak=8cf1126a82e799aa348195b62c643f9e&v=1.0"></script>
+    <script type="text/javascript" src="../js/share.js"></script>
+</head>
+<body class="bg" ng-controller="shareController">
+<div class="share" id="share">
+    <div class="p10">
+        <p class="font18 b color_red mb10">{{publicData.shopName}}</p>
+
+        <p class="font14">——{{publicData.shortDesc}}</p>
+    </div>
+    <div class="slide"><img ng-src="../{{shopImageP.filePath}}" ng-repeat="shopImageP in publicData.shopImages" ng-if="shopImageP.pictureType === 'MAIN'" alt=""></div>
+    <ul class="link bg_fff">
+        <li><a class="substr" ng-click="openMap(publicData.address)"><i class="icon icon-address mr20"></i>{{publicData.address}}</a><i class="icon-next"> > </i></li>
+        <li style="display:block;background: #FFF;padding-right: 20px; overflow: hidden;"><a style="float: left;" href="tel:{{publicData.phoneNumber1}}"><i class="icon icon-tel mr20"></i>{{publicData.phoneNumber1}}</a><a style="float: left;" href="tel:{{publicData.phoneNumber2}}">{{publicData.phoneNumber2}}</a><i class="icon-next"> > </i></li>
+    </ul>
+    <article class="p10 mb10 bg_fff">
+        <p class="col_con"><pre>{{publicData.shopDesc}}</pre></p>
+    </article>
+<div class="download">
+    <div class="fl"><img src="../images/appicon.png" class="download-logo"/><span class="font18">嘟嘟囔囔</span></div>
+    <div class="fr"><a class="btn-download" ng-click="downloadApp()">下载APP</a></div>
+</div>
+</div>
+<div class="cover" ng-show="isShowCode">
+    <a class="btn-close" ng-click="isShowCode=!isShowCode">关闭</a>
+    <div class="code"><p>长按下方二维码<br>选择“识别图中二维码”进行下载</p><img class="bg_fff p20" src="../img/code.jpg"></div>
+</div>
+<div id="allmap" class="hide"></div>
+</body>
+</html>
+
+
+
+
+
+
+

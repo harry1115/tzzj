@@ -1,0 +1,167 @@
+<div>
+    <div>
+        <div class="form-btn p20 oh">
+            <button type="button" ng-click="cancel()" class="btn mr10"><i class="icon icon-arrow-left"></i> 返回</button>
+            <button type="button" ng-click="updateUser()" class="btn btn-primary mr10"><i
+                    class="icon icon-white icon-ok-circle"></i> 保存
+            </button>
+            <!-- <button type="button" class="btn btn-danger mr10"><i class="icon icon-white icon-trash"></i> 删除</button>-->
+        </div>
+        <div class="p20">
+            <div class="form-horizontal mb20">
+                <div class="row-fluid">
+                    <div class="control-group span12">
+                        <label class="control-label">头像：</label>
+
+                        <div class="controls">
+                            <div class="fl span4" style="margin-right:50px;"><a  class="thumbnail fl mr20"> <img
+                                    ng-src="{{userImage.filePath}}" ng-repeat="userImage in user.userImages"
+                                    ng-if="userImage.pictureType === 'PORTRAIT'" onerror="this.src='img/thumb-user.png'"
+                                    alt="" width="100" height="100"> </a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="control-group span4">
+                        <label class="control-label">嘟囔号：</label>
+
+                        <div class="controls">
+                            <input type="text" class="txt input-xlarge span3" ng-model="user.userId"
+                                   ng-readonly="true"/>
+                        </div>
+                    </div>
+                    <div class="control-group span4">
+                        <label class="control-label">姓名：</label>
+
+                        <div class="controls">
+                            <input type="text" class="txt input-xlarge span3" ng-model="user.userName"/>
+                        </div>
+                    </div>
+                    <div class="control-group span4">
+                        <label class="control-label">性别：</label>
+
+                        <div class="controls">
+                            <select class="span1" ng-model="user.gender" ng-options="g.id as g.name for g in genders">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="control-group span4">
+                        <label class="control-label">用户角色：</label>
+
+                        <div class="controls">
+                            <select class="span1" id="inputUserRole" ng-model="user.userRole"
+                                    ng-options="ur.id as ur.name for ur in userRoles">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group span4">
+                        <label class="control-label">生日：</label>
+
+                        <div class="controls">
+                            <input type="text" class="txt input-xlarge span3"
+                                   value="{{ user.birthDay | date: 'yyyy-MM-dd' }}" ng-readonly="true">
+                        </div>
+                    </div>
+                    <div class="control-group span4">
+                        <label class="control-label">积分：</label>
+
+                        <div class="controls">
+                            <input type="text" class="txt input-xlarge span3" ng-model="user.score">
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="control-group span4">
+                        <label class="control-label">注册渠道：</label>
+
+                        <div class="controls">
+                            <select class="span1" ng-model="user.userType"
+                                    ng-options="ut.id as ut.name for ut in userTypes">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group span4">
+                        <label class="control-label">手机：</label>
+
+                        <div class="controls">
+                            <input type="text" class="txt input-xlarge span3" ng-model="user.phoneNumber">
+                        </div>
+                    </div>
+                    <div class="control-group span4">
+                        <label class="control-label">邮箱：</label>
+
+                        <div class="controls">
+                            <input type="text" class="txt input-xlarge span3" ng-model="user.email">
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="control-group span4">
+                        <label class="control-label">QQ：</label>
+
+                        <div class="controls">
+                            <input type="text" class="txt input-xlarge span3" ng-model="user.qq">
+                        </div>
+                    </div>
+                    <div class="control-group span4">
+                        <label class="control-label">微博：</label>
+
+                        <div class="controls">
+                            <input type="text" class="txt input-xlarge span3" ng-model="user.weibo">
+                        </div>
+                    </div>
+                    <div class="control-group span4">
+                        <label class="control-label">注册时间：</label>
+
+                        <div class="controls">
+                            <input type="text" class="txt input-xlarge span3"
+                                   value="{{ user.creationDate | date: 'yyyy-MM-dd' }}" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="control-group span12">
+                        <label class="control-label">地址：</label>
+
+                        <div class="controls">
+                            <input type="text" ng-model="user.address" class="txt input-xlarge span7"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#">优惠券</a></li>
+                </ul>
+                <table width="100%" border="0" class="table">
+                    <tr>
+                        <th width="30" height="30">序号</th>
+                        <th>名称</th>
+                        <th>满额</th>
+                        <th>抵扣额</th>
+                        <th>截止日期</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr ng-repeat="coupons in myCoupons">
+                        <td>{{coupons.couponDefinitionNumber}}</td>
+                        <td>{{coupons.couponName}}</td>
+                        <td>{{coupons.meetValue}}</td>
+                        <td>{{coupons.faceValue }}</td>
+                        <td>{{coupons.expiryDate | date: 'yyyy-MM-dd' }}</td>
+                        <td>{{coupons.couponStatus | couponStatusFilter }}</td>
+                        <td>
+                            <button type="button" class="btn btn-danger" title="删除" ng-click="delete(coupons,$index)"
+                                    ng-confirm-click="删除的优惠券不能找回，你确定要删除么？"><i class="icon icon-white icon-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>

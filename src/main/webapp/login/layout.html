@@ -1,0 +1,30 @@
+<div  >
+   <form  name="loginForm" novalidate>
+  <div class="login-form"  >
+    <div class="login-logo"><img src="img/logo.png"></div>
+    <ul class="">
+      <li>
+        <input type="text" class="txt login-user" placeholder="用户名" value=""  id="inputAdminId" name="adminId"  data-ng-model="administrator.userId" required  />
+          <div class="mt5"><span class="mes-error" data-ng-show="errorMessage" >
+            提示: {{ errorMessage}}
+        </span></div>
+      </li>
+      <li>
+        <input type="password" class="txt login-pwd" placeholder="密码" value=""  id="inputPassword" name="password"  
+               data-ng-model="administrator.password" 
+               data-ng-minlength="6"
+               required placeholder="密码" auto-fill-sync/>
+      </li>
+      <li><label><input type="checkbox" class="checkbox mr5" checked />记住密码</label></li>
+      <li> 
+          <button type="submit" class="login-btn tran2" data-ng-click="loginUser(administrator)" ng-disabled="loginForm.$invalid || !loginForm.$dirty">登录</button>
+      </li>
+    </ul>
+  </div>
+      
+
+   </form> 
+  <div class="foot">Copyright © 2015 dudunangnang. All Rights Reserved.</div>
+</div>
+
+

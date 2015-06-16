@@ -1,0 +1,264 @@
+<div>
+
+    <form novalidate="novalidate" name="productForm">
+        <div class="form-btn p20 oh">
+            <button type="button" class="btn mr10" ng-click="cancel()"><i class="icon icon-arrow-left"></i> 返回</button>
+            <button ng-disabled="product.productName==null||product.typeId==null||product.sellable==null||product.price==null"
+                    type="button" class="btn btn-primary mr10" ng-click="updateProduct()"><i
+                    class="icon icon-white icon-ok-circle"></i> 保存
+            </button>
+            <!--<button type="button" class="btn btn-danger mr10"><i class="icon icon-white icon-trash"></i> 删除</button>-->
+        </div>
+        <div class="p20">
+            <div class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label"><span class="color_red mr5">*</span>商品名称：</label>
+
+                    <div class="controls">
+                        <input type="text" class="txt input-xlarge span5" ng-model="product.productName" required/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label"><span class="color_red mr5">*</span>商品分类：</label>
+
+                    <div class="controls">
+                        <select ng-model="product.typeId"
+                                ng-options="productType.typeId as productType.typeName for productType in productTypes">
+
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label"><span class="color_red mr5">*</span>商品状态：</label>
+
+                    <div class="controls">
+
+                        <select ng-model="product.sellable" ng-options="ps.id as ps.name for ps in productStates">
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group"
+                     ng-class="{ 'error' : productForm.inputPrice.$invalid && !productForm.inputPrice.$pristine }">
+                    <label class="control-label"><span class="color_red mr5">*</span>价格：</label>
+
+                    <div class="controls">
+                        <div class="input-prepend input-append input-price"><span class="add-on">￥</span>
+                            <input class="txt span1" type="number" name="inputPrice" id="inputPrice"
+                                   ng-model="product.price" required/>
+                            <span class="add-on">元</span></div>
+                        <p class="help-inline"
+                           ng-show="productForm.inputPrice.$dirty && productForm.inputPrice.$invalid">
+                            <span>
+                                价格只能输入数字。
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">加入赠品：</label>
+
+                    <div class="controls">
+                        <input type="checkbox" ng-model="product.present" class="ios7CBox">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">图片：</label>
+
+                    <div class="controls">
+                        <div class="fl span4" style="margin-right:50px;"><a ng-click="uploadImg('PORTRAIT')"
+                                                                            class="thumbnail fl mr20"> <img
+                                ng-src="{{productImageP.filePath}}" ng-repeat="productImageP in product.productImages"
+                                ng-if="productImageP.pictureType === 'PORTRAIT'" alt=""/> <img src="img/thumb-add.png"
+                                                                                               alt=""
+                                                                                               ng-if="product.productImages.length==0"/></a>
+
+                            <p class="color_black label label-inverse mb10">缩略图</p>
+
+                            <p class="color_999">提示：请上传尺寸为200x200jpg或者png图片</p>
+                        </div>
+                        <div class="fl span4"><a ng-click="uploadImg('MAIN')"
+                                                                            class="thumbnail fl mr20"> <img
+                                ng-src="{{productImageM.filePath}}" ng-repeat="productImageM in product.productImages"
+                                ng-if="productImageM.pictureType === 'MAIN'" alt=""/> <img src="img/thumb-add.png"
+                                                                                               alt=""
+                                                                                               ng-if="product.productImages.length==0"/></a>
+
+                            <p class="color_black label label-inverse mb10">原图</p>
+
+                            <p class="color_999">提示：请上传小于200K的jpg或者png图片，尺寸没有限制</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group hide">
+                    <label class="control-label">更新图片:</label>
+
+                    <div class="controls">
+                        <input id="onfileUpload" ng-file-select="onFileSelect($files)" type="file" multiple/>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">显示顺序：</label>
+
+                    <div class="controls"
+                         ng-class="{ 'has-error' : productForm.inputOrdering.$invalid && !productForm.inputOrdering.$pristine }">
+                        <input class="txt span2" type="number" name="inputOrdering" id="inputOrdering"
+                               ng-model="product.ordering"/>
+
+                        <p class="help-inline"
+                           ng-show="productForm.inputOrdering.$dirty && productForm.inputOrdering.$invalid">
+                            <span>
+                                查询顺序只能输入数字。
+                            </span>
+                        </p>
+
+
+                    </div>
+                </div>
+                <!--<div class="control-group">
+                           <label class="control-label">特殊需求：</label>
+                           <div class="controls">
+                               <div>
+                                   <label class="mr20">
+                                       <input type="checkbox" class="mr5">
+                                       常温</label>
+                                   <label class="mx20">
+                                       <input type="checkbox" class="mr5">
+                                       加冰</label>
+                                   <label class="mx20">
+                                       <input type="checkbox" class="mr5">
+                                       加热</label>
+                                   <label class="mx20">
+                                       <input type="checkbox" class="mr5">
+                                       <input type="text" class="txt span2">
+                                   </label>
+                                   <a>添加需求</a> </div>
+                           </div>
+                       </div>-->
+                <div class="control-group">
+                    <label class="control-label">商品描述：</label>
+
+                    <div class="controls">
+                        <textarea class="span7" style="height:150px;" ng-model="product.productDesc"></textarea>
+                    </div>
+                </div>
+                <div class="form-title mb20">促销信息</div>
+                <div class="control-group">
+                    <label class="control-label">是否促销：</label>
+
+                    <div class="controls">
+                        <input type="checkbox" class="ios7CBox" ng-model="product.promotion">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">促销类型：</label>
+
+                    <div class="controls">
+                        <div class="mt5">
+                            <label class="mr20">
+                                <input type="checkbox" class="mr5" ng-model="product.productShowType"
+                                       ng-true-value="NORMAL">
+                                普通</label>
+                            <label class="mr20">
+                                <input type="checkbox" class="mr5" ng-model="product.productShowType"
+                                       ng-true-value="SUPERSCRIPT">
+                                角标</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group hide">
+                    <label class="control-label" for="inputPromotionType">促销类型:</label>
+
+                    <div class="controls">
+                        <select class="form-control" id="inputPromotionType"
+                                ng-model="product.promotionDefinition.promotionType"
+                                ng-options="pt.id as pt.name for pt in promotionTypes">
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group hide">
+                    <label class="control-label" for="inputMinimalOrderQuantity">购买数量:</label>
+
+                    <div class="controls">
+                        <input class="form-control" type="number" id="inputMinimalOrderQuantity"
+                               ng-model="product.promotionDefinition.minimalOrderQuantity"/>
+                    </div>
+                </div>
+                <div class="control-group hide">
+                    <label class="control-label" for="inputFreeProductQuantity">赠送数量:</label>
+
+                    <div class="controls">
+                        <input class="form-control" type="number" id="inputFreeProductQuantity"
+                               ng-model="product.promotionDefinition.freeProductQuantity"/>
+                    </div>
+                </div>
+                <div ng-if="product.promotion">
+                    <div class="form-title mb20">赠品信息</div>
+                    <div class="control-group">
+                        <label class="control-label">相关赠品：</label>
+
+                        <div class="controls">
+                            <div class="mb10">
+                                <button class="btn btn-complete " ng-click="ShowFree()"><i
+                                        class="icon icon-white icon-plus-sign"></i> 添加配套赠品
+                                </button>
+
+                            </div>
+
+                            <div class="span7 well">
+                                <div class="alert center" ng-if="promotionProducts.length==0">暂无相关赠品</div>
+                                <table width="100%" class="table table-hover-icon">
+                                    <tr ng-repeat="promotionProduct in promotionProducts">
+                                        <td>{{promotionProduct.freeProductName}}</td>
+                                        <td>x
+                                            <input type="number" class="txt span1"
+                                                   ng-model="promotionProduct.freeProductQuantity" placeholder="数量">
+                                        </td>
+                                        <td width="50"><a class="hide fr" title="移除歌曲"
+                                                          ng-click="deleteProductPromotion(promotionProduct);"><i
+                                                class="icon icon-red icon-trash"></i></a></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+<div class="alert alert-error" data-ng-show="error"
+     style="position: absolute;top:50%;left:50%;margin: -17px 0 0 -190px;">
+    <a class="close" data-dismiss="alert" onClick="$(this).parent().hide;">×</a><span>&nbsp;&nbsp;上传错误: {{ error}}</span>
+</div>
+<div class="alert alert-success hide"
+     style="position: absolute;top:50%;left:50%;margin: -17px 0 0 -190px;">
+    <a class="close" data-dismiss="alert" onClick="$(this).parent().hide;">×</a><span>&nbsp;&nbsp;上传成功: {{ successMessage}}</span>
+</div>
+<div class="cover" ng-show="showFreeProductModal">
+    <div class="modal">
+        <div class="modal-header"><a class="close" data-dismiss="modal"
+                                     ng-click="showFreeProductModal=!showFreeProductModal">×</a>
+
+            <h3>请选择配套赠品</h3>
+        </div>
+        <div class="modal-body" style="min-height:400px;">
+
+            <table width="100%" class="table modal-body-list">
+                <tr ng-repeat="freeProduct in freeProducts | filter:{present:true}">
+                    <td width="10"><input type="checkbox" ng-model=" freeProduct.sellable " class="checkbox mr20"/></td>
+                    <td>{{freeProduct.productName}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="SaveProduct()">确定</button>
+            <button class="btn" ng-click="showFreeProductModal=!showFreeProductModal">取消</button>
+        </div>
+    </div>
+</div>
+
+
+

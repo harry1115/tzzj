@@ -1,0 +1,133 @@
+<div>
+    <div>
+        <div class="form-btn p20 oh">
+            <button type="button" ng-click="cancel()"   class="btn mr10" ><i class="icon icon-arrow-left"></i> 返回</button>
+            <button ng-disabled="shop.shopName==null" ng-click="updateShop()"  type="button" class="btn btn-primary mr10"><i class="icon icon-white icon-ok-circle"></i> 保存</button>
+            <!--<button type="button" class="btn btn-danger mr10"><i class="icon icon-white icon-trash"></i> 删除</button>-->
+            <button type="button" class="btn mr10"  onclick="$('.cover').fadeIn()"><i class="icon icon-share"></i> 预览分享页</button>
+        </div>
+        <div class="p20">
+            <div class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label"><span class="color_red mr5">*</span>店铺名：</label>
+                    <div class="controls">
+                        <input type="text" class="txt input-xlarge span3" ng-model="shop.shopName" required>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">O2O模式：</label>
+                    <div class="controls"><input type="checkbox" class="mt5 ios7CBox" ng-model="shop.o2o" /></div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">支付功能：</label>
+                    <div class="controls"><input type="checkbox" class="mt5 ios7CBox" ng-model="shop.pay" /></div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">抢歌功能：</label>
+                    <div class="controls"><input type="checkbox" class="mt5 ios7CBox" ng-model="shop.song" /></div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">显示顺序：</label>
+                    <div class="controls">
+                        <input type="text" class="txt input-xlarge span2" ng-model="shop.ordering" >
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">电话：</label>
+                    <div class="controls">
+                        <input type="text" ng-model="shop.phoneNumber1"  class="txt input-xlarge span3 mr20" placeholder="电话一"> <input ng-model="shop.phoneNumber2"  type="text" class="txt input-xlarge span3" placeholder="电话二，有则填写，没有则不填">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">地址：</label>
+                    <div class="controls">
+                        <input type="text" class="txt input-xlarge span7" ng-model="shop.address" >
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">头像：</label>
+                    <div class="controls">
+                        <div class="fl span4" style="margin-right:50px;"><a ng-click="UploadImage('PORTRAIT')" class="thumbnail fl mr20"> <img ng-src="{{shopImageP.filePath}}" ng-repeat="shopImageP in filterShopImageP =(shop.shopImages | filter:'PORTRAIT')" alt=""><img src="img/thumb-add.png" alt="" ng-if="filterShopImageP.length==0" /> </a>
+                            <p class="color_black label label-inverse mb10">缩略图</p>
+                            <p class="color_999">提示：请上传尺寸为200x200jpg或者png图片</p>
+                        </div>
+                        <div class="fl span4"><a ng-click="UploadImage('MAIN')" class="thumbnail fl mr20"> <img  ng-src="{{shopImageM.filePath}}" ng-repeat="shopImageM in filterShopImageM =(shop.shopImages | filter:'MAIN')"  alt=""> <img src="img/thumb-add.png" alt="" ng-if="filterShopImageM.length==0" /></a>
+                            <p class="color_black label label-inverse mb10">原图</p>
+                            <p class="color_999">提示：请上传小于200K的jpg或者png图片，尺寸没有限制</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">相册：</label>
+                    <div class="controls"  >
+                        <ul class="thumbnails">
+                            <li ng-repeat="shopImageS in shop.shopImages"  ng-if="shopImageS.pictureType === 'SUBTHUMB'" ><a  class="thumbnail" > <img ng-src="{{shopImageS.filePath}}"  alt="" width="100" height="100"> </a>               <a class="btn btn-danger thumbnail-btn" ng-click="removeImage(shopImageS)"><i class="icon icon-white icon-trash"></i></a>       </li>
+
+                            <li><a ng-click="UploadImage('SUBSIDIARY')" class="thumbnail"> <img src="img/thumb-add.png" alt="" width="100" height="100"> </a></li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="control-group">
+                    <label class="control-label">简介：</label>
+                    <div class="controls">
+                        <input type="text" class="txt span7" ng-model="shop.shortDesc" >
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">描述：</label>
+                    <div class="controls">
+                        <textarea class="span7" style="height:150px;" ng-model="shop.shopDesc" ></textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">分享链接：</label>
+                    <div class="controls">
+                        <input type="text" class="txt span7" ng-model="shop.shareUrl" >
+                        <a class="ml20"  style="line-height:26px;"  onclick="$('.cover').fadeIn()">预览分享页</a> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <input id="onfileUpload" style="display:none" ng-file-select="onFileSelect($files)" type="file" multiple/>
+    <div class="alert alert-error" data-ng-show="error"
+         style="position: absolute;top:50%;left:50%;margin: -17px 0 0 -190px;">
+        <a class="close" data-dismiss="alert" onClick="$(this).parent().hide;">×</a><span>&nbsp;&nbsp;上传错误: {{ error}}</span>
+    </div>
+    <div class="alert alert-success hide"
+         style="position: absolute;top:50%;left:50%;margin: -17px 0 0 -190px;">
+        <a class="close" data-dismiss="alert" onClick="$(this).parent().hide;">×</a><span>&nbsp;&nbsp;上传成功: {{ successMessage}}</span>
+    </div>
+</div>
+
+
+<div class="cover hide">
+    <a class="btn-close" onclick="$('.cover').hide()">关闭</a>
+    <div class="mobile-bg">
+        <div class="mobile-con">
+            
+            <div class="share">
+                <div class="p10">
+                    <p class="font18 b color_red mb10">{{shop.shopName}}</p>
+
+                    <p class="font14">——{{shop.shortDesc}}</p>
+                </div>
+                <div class="slide"><img ng-src="{{shopImageP.filePath}}" ng-repeat="shopImageP in shop.shopImages" ng-if="shopImageP.pictureType === 'MAIN'" alt=""></div>
+                <ul class="link bg_fff">
+                    <li><a class="substr"><i class="icon icon-address mr20"></i>{{shop.address}}</a><i class="icon-next hide"> > </i></li>
+                    <li style="display:block;background: #FFF;padding-right: 20px; overflow: hidden;"><a style="float: left;" href="tel:{{shop.phoneNumber1}}"><i class="icon icon-date mr20"></i>{{shop.phoneNumber1}}</a><a style="float: left;" href="tel:{{shop.phoneNumber2}}">{{shop.phoneNumber2}}</a><i class="icon-next hide"> > </i></li>
+                </ul>
+                <article class="p10 mb10 bg_fff">
+                    <p class="col_con"><pre>{{shop.shopDesc}}</pre></p>
+                </article>
+            </div>
+            <div class="download">
+                <div class="fl"><img src="images/appicon.png" class="download-logo"/><span class="font18">嘟嘟囔囔</span></div>
+                <div class="fr"><a class="btn-download" onClick="downloadApp()">下载APP</a></div>
+            </div>
+            <script type="text/javascript" src="js/share.js"></script>
+        </div>
+    </div>
+</div>

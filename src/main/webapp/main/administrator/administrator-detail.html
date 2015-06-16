@@ -1,0 +1,62 @@
+<div>
+  <div>
+    <div class="form-btn p20 oh">
+      <button type="button" ng-click="cancel()"  class="btn mr10" ><i class="icon icon-arrow-left"></i> 返回</button>
+      <button  ng-disabled="administrator.userId==null||administrator.userName==null||administrator.adminRole==null" type="button" ng-click="updateAdministrator()"  class="btn btn-primary mr10"><i class="icon icon-white icon-ok-circle"></i> 保存</button>
+      <!--<button type="button" class="btn btn-danger mr10"><i class="icon icon-white icon-trash"></i> 删除</button>-->
+    </div>
+    <div class="p20">
+      <div class="form-horizontal">
+        <div class="control-group">
+          <label class="control-label">头像：</label>
+          <div class="controls">
+            <div class="fl span4" style="margin-right:50px;">
+             <input id="onfileUpload" class='hide' ng-file-select="onFileSelect($files)" type="file" multiple/> 
+              <a  class="thumbnail fl mr20" ng-click='uploadImage()'>  <img ng-src="{{administrator.administratorImages.length==0?'img/thumb-add.png':administrator.administratorImages[0].filePath}}"  /> </a>
+              <p class="color_black label label-inverse mb10">缩略图</p>
+              <p class="color_999">提示：请上传尺寸为200x200jpg或者png图片</p>
+                
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label"><span class="color_red mr5">*</span>用户名：</label>
+          <div class="controls">
+            <input type="text" class="txt input-xlarge span3" ng-model="administrator.userId" ng-readonly="true"  />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label"><span class="color_red mr5">*</span>昵称：</label>
+          <div class="controls">
+            <input type="text" class="txt input-xlarge span3" ng-model="administrator.userName"  required />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label"><span class="color_red mr5">*</span>角色：</label>
+          <div class="controls">
+              <select id="inputAdminRole" ng-change="ResetShop()"  ng-model="administrator.adminRole" ng-options="ar.id as ar.name for ar in adminRoles">
+                <option value="">-- 请选择 --</option>
+              </select>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">所属店铺：</label>
+          <div class="controls">
+            <select  ng-model="administrator.shopId" ng-disabled ="(administrator.adminRole=='SUPER')||administrator.adminRole==null"  ng-options="shop.shopId as shop.shopName for shop in shops" >
+              <option value="">-- 请选择 --</option>
+            </select>
+          </div>
+        </div>
+        <div class="alert alert-error" data-ng-show="error"
+             style="position: absolute;top:50%;left:50%;margin: -17px 0 0 -190px;">
+          <a class="close" data-dismiss="alert" onClick="$(this).parent().hide;">×</a><span>&nbsp;&nbsp;上传错误: {{ error}}</span>
+        </div>
+        <div class="alert alert-success hide"
+             style="position: absolute;top:50%;left:50%;margin: -17px 0 0 -190px;">
+          <a class="close" data-dismiss="alert" onClick="$(this).parent().hide;">×</a><span>&nbsp;&nbsp;上传成功: {{ successMessage}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

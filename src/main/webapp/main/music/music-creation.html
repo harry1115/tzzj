@@ -1,0 +1,84 @@
+<div>
+  <div>
+    <div class="form-btn p20 oh">
+        <button type="button" class="btn mr10" ng-click="cancel()" ><i class="icon icon-arrow-left"></i> 返回</button>
+      <button ng-disabled="singer.singerName==null" type="button" class="btn btn-primary mr10" ng-click="createSinger()" ><i class="icon icon-white icon-ok-circle"></i> 保存</button>
+    </div>
+    <div class="p20">
+      <div class="form-horizontal">
+        <div class="control-group">
+          <label class="control-label"><span class="color_red mr5">*</span>姓名：</label>
+          <div class="controls">
+            <input type="text" id="inputSingerName" ng-model="singer.singerName" class="txt input-xlarge span3" required />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">英文名：</label>
+          <div class="controls"><input type="text" class="txt input-xlarge span3" id="inputEnglishName" ng-model="singer.englishName" ></div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">性别：</label>
+          <div class="controls">
+               <select class="span1"   id="inputGender" ng-model="singer.gender" ng-options="g.id as g.name for g in genders">
+
+               </select>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">徽章类型：</label>
+          <div class="controls">
+            <select class="span1"   id="inputBadgeType" ng-model="singer.badgeType"
+                                ng-options="bt.id as bt.name for bt in badgeTypes">
+              </select>
+              <p class="help-inline color_999 ml20">说明：列表中<i class="icon-level1">著名</i>表示著名，<i class="icon-level0">著名</i>表示普通。</p>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">显示顺序：</label>
+          <div class="controls">
+
+            <input class="txt input-xlarge span2"  type="number" id="inputSingerOrdering" ng-model="singer.ordering" >
+          </div>
+        </div>
+
+
+        <div class="control-group">
+          <label class="control-label">目录简介：</label>
+          <div class="controls">
+            <input type="text" class="txt span7" id="inputShortDesc" ng-model="singer.shortDesc" >
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">个性签名：</label>
+          <div class="controls">
+            <input type="text" class="txt span7"  id="inputSingerSignature" ng-model="singer.signature" >
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">乐手描述：</label>
+          <div class="controls">
+            <textarea class="span7" style="height:120px;"  rows="6" ng-model="singer.singerDesc" ></textarea>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">经历：</label>
+          <div class="controls">
+            <textarea class="span7" style="height:50px;" ng-model="singer.experience" ></textarea>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">参与作品：</label>
+          <div class="controls">
+            <textarea class="span7" style="height:50px;"  ng-model="singer.works" ></textarea>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">标签：</label>
+          <div class="controls">
+            <textarea class="span7" style="height:50px;"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

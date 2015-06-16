@@ -1,0 +1,143 @@
+<div>
+    <form novalidate="novalidate">
+        <div class="form-btn p20 oh">
+            <button type="button" class="btn mr10"  ng-click="cancel()"><i class="icon icon-arrow-left"></i> 返回</button>
+            <button ng-disabled="playbill.singerId==null||playbill.playbillDate==null||playbill.fromTime==null||playbill.toTime==null" type="button" class="btn btn-primary mr10" title="保存" ng-click="updatePlaybill()"><i class="icon icon-white icon-ok-circle"></i> 保存</button>
+            <!--<button type="button" class="btn btn-danger mr10" title="删除"><i class="icon icon-white icon-trash"></i> 删除</button>-->
+        </div>
+        <div class="p20">
+            <div class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label"><span class="color_red mr5">*</span>表演者：</label>
+                    <div class="controls">
+                        <select ng-change="ChangeSingerSong($event)" ng-model="playbill.singerId" ng-options="singer.singerId as singer.singerName for singer in singers">                    
+                            <option value="">-- 请选择 --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label"><span class="color_red mr5">*</span>表演时间：</label>
+                    <div class="controls">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle date-toggle-select" id="playbillDateLabel" role="button" data-toggle="dropdown" data-target="#" href="">
+                                <div class="input-group">
+                                    <input class="txt input-date mr20"  type="text" ng-readonly="true" value="{{ playbill.playbillDate | date: 'yyyy-MM-dd' }}" />
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="playbillDateLabel">
+                                <datetimepicker data-ng-model="playbill.playbillDate"  data-on-set-time="onDateSet(newDate, oldDate)" data-datetimepicker-config="{ startView:'day', minView:'day', dropdownSelector: '.date-toggle-select' }"></datetimepicker>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle fromtime-toggle-select" id="fromTimeLabel" role="button" data-toggle="dropdown" data-target="#" href="">
+                                <div class="input-group">
+                                    <input class="txt input-time" type="text" ng-readonly="true" value="{{ playbill.fromTime | date: 'HH:mm' }}" />
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="fromTimeLabel">
+                                <datetimepicker data-ng-model="playbill.fromTime" data-on-set-time="onTimeSet(newDate, oldDate)" data-datetimepicker-config="{startView:'hour', minView:'minute', dropdownSelector: '.fromtime-toggle-select' }"></datetimepicker>
+                            </ul>
+                        </div>
+                        —
+                        <div class="dropdown">
+                            <a class="dropdown-toggle totime-toggle-select" id="toTimeLabel" role="button" data-toggle="dropdown" data-target="#" href="">
+                                <div class="input-group">
+                                    <input class="txt input-time"  type="text" ng-readonly="true" value="{{ playbill.toTime | date: 'HH:mm' }}" />
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="toTimeLabel">
+                                <datetimepicker data-ng-model="playbill.toTime" data-datetimepicker-config="{startView:'hour', minView:'minute', dropdownSelector: '.totime-toggle-select' }"></datetimepicker>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label"><span class="color_red mr5"></span>相关活动：</label>
+                    <div class="controls">
+                        <select ng-model="playbill.activityId" ng-options="activity.activityName as activity.activitySubject for activity in activities">
+                            <option value="">-- 请选择 --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">表演歌曲：</label>
+                    <div class="controls">
+                        <div class="mb10">
+                            <button ng-disabled="playbill.singerId==null||playbillLines.length==3" class="btn btn-complete" ng-click="openSong(true,playbillLines,3,'BG')"><i class="icon icon-white icon-plus-sign"></i> 添加表演歌曲</button>
+                            <span   class="color_999 mx20">提示：最多选择3首歌曲</span><a ng-click="openLSong(3,'BG')" >创建歌曲</a></div>
+                        <div class="span5 well">
+                            <div ng-if="playbillLines.length===0">暂无歌曲</div>
+                            <table width="100%" class="table table-hover-icon">
+                                <tr ng-repeat="playbillLine in playbillLines">
+                                    <td width="20">{{$index + 1}}</td>
+                                    <td>{{playbillLine.songName}}</td>
+                                    <td width="50"><a class="hide fr" title="移除歌曲" ng-click="deletePlaybillLine(playbillLine)"><i class="icon icon-red icon-trash"></i></a></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">抢歌歌曲：</label>
+                    <div class="controls">
+                        <div class="mb10">
+                            <button ng-disabled="playbill.singerId==null||singerOwnedSongs.length==10" class="btn btn-complete" ng-click="openSong(true,singerOwnedSongs,10,'QG')"><i class="icon icon-white icon-plus-sign"></i> 添加抢歌歌曲</button>
+                            <span class="color_999 mx20">提示：最多选择10首歌曲</span><a ng-click="openLSong(10,'QG')">创建歌曲</a></div>
+                        <div class="span5 well">
+                            <div ng-if="singerOwnedSongs.length===0">暂无歌曲</div>
+                            <table width="100%" class="table table-hover-icon">
+                                <tr  ng-repeat="singerOwnedSong in singerOwnedSongs">
+                                    <td width="20">{{$index + 1}}</td>
+                                    <td>{{singerOwnedSong.songName}}</td>
+                                    <td width="50"><a class="hide fr" title="移除歌曲" ng-click="deleteSingerOwnedSong(singerOwnedSong)"><i class="icon icon-red icon-trash"></i></a></td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="cover" id="cover1" ng-show="showSongsModal">
+    <div class="modal">
+        <div class="modal-header"> <a class="close" data-dismiss="modal"  ng-click="showSongsModal=!showSongsModal">×</a>
+            <h3>请选择歌曲</h3>
+        </div>
+        <div class="modal-body" style="min-height:400px;">
+            <div class="alert center" ng-if="filteredSongs.length==0">歌曲库中暂时还没有该歌手的表演歌曲</div>
+            <table width="100%" class="table modal-body-list">
+                    <tr ng-repeat="song in filteredSongs =(songs | filter:{originalSinger:singerName})">
+                    <td width="10"><input  type="checkbox" class="checkbox" ng-click="SetSelectSongs(song.songId,song.songName,3)"  ng-checked="IsSelectSongs(song.songId,song.songName)" /></td>
+                    <td width="20">{{$index + 1}}</td>
+                    <td>{{song.songName}}</td>
+                </tr>  
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button"  class="btn btn-primary" ng-click="SaveSong(3)">确定</button>
+            <button type="button"  class="btn" ng-click="showSongsModal=!showSongsModal">取消</button>
+        </div>
+    </div>
+</div>
+<div class="cover" id="cover2" ng-show="showLSongsModal" >
+    <div class="modal">
+        <div class="modal-header"> <a  class="close" data-dismiss="modal" ng-click="CloseLDiv()">×</a>
+            <h3>创建歌曲</h3>
+        </div>
+        <div class="modal-body form-horizontal" style="min-height:70px;">
+            <div class="control-group mt20">
+                <label class="control-label">歌曲名称：</label>
+                <div class="controls">
+                    <div class="oh"><input type="text" ng-model="LSongName" class="txt span5" /></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button  type="button"  class="btn btn-primary" ng-disabled="LSongName==''" ng-click="SaveLSong()" >确定</button>
+            <button  type="button"  class="btn" ng-click="CloseLDiv()" >取消</button>
+        </div>
+    </div>
+</div>
